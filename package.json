@@ -1,0 +1,18 @@
+{
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon --exec node -r dotenv/config src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pedrofracassi/amongcord.git"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "discord.js": "^12.3.1"
+  },
+  "devDependencies": {
+    "dotenv": "^8.2.0",
+    "nodemon": "^2.0.4"
+  }
+}
