@@ -11,6 +11,6 @@ module.exports = class Players extends Command {
 
   run ({ message, game }) {
     if (!game) return message.channel.send('No game, type `,newgame` to start one!')
-    message.channel.send(`**Players:**\n${game.players.map(p => ` - \`${p.member.user.tag}\` (${p.color}) ${p.alive ? '' : '☠'}`).join('\n')}`)
+    message.channel.send(`**Players (${game.players.length}/10):**\n${game.players.map(p => ` - \`${p.member.user.tag}\` (${p.color}) ${p.alive ? '' : '☠'}`).join('\n')}`)
   }
 }
