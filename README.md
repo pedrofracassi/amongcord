@@ -1,7 +1,7 @@
 <div align="center">
   <img height="200" src="https://svgshare.com/i/PXE.svg">
   <p>Discord bot for controlling a voice channel during Among Us matches</p>
-  <a href="https://discord.com/oauth2/authorize?client_id=753741527674781706&permissions=4194304&scope=bot"><b>Click here to add Amongcord to your server</b></a>
+  <a href="https://amongcord.pedrofracassi.me/add"><b>Click here to add Amongcord to your server</b></a>
 </div>
 
 ## Commands
@@ -18,6 +18,8 @@
 | `,lobby` | Sets the stage to **Lobby**, marks everyone as alive and unmutes them |
 | `,dead <color>` | Marks a player as dead by their color. Dead players are kept muted during the discussion stage. |
 | `,alive <color>` | Marks a player as alive by their color |
+| `,github` | Links to this GitHub page |
+| `,add` | Shows the bot's invite link |
 
 ## Screenshot
 

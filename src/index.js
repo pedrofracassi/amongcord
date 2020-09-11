@@ -9,6 +9,8 @@ const GameManager = require('./GameManager')
 let gameManager = new GameManager()
 let commands = []
 
+const prefix = process.env.PREFIX || ','
+
 glob.sync('./src/commands/**/*.js').forEach(file => {
   console.log(`Loading ${file}`)
   const Command = require(path.resolve(file))
@@ -27,7 +29,7 @@ client.on('message', message => {
   const game = gameManager.getGame(message.guild.id)
 
   commands.forEach(command => {
-    if (message.content.startsWith(`,${command.name}`)) {
+    if (message.content.startsWith(`${prefix}${command.name}`)) {
       command.run({
         message,
         gameManager,
