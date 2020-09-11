@@ -1,6 +1,7 @@
 <div align="center">
   <img height="200" src="https://svgshare.com/i/PXE.svg">
   <p>Discord bot for controlling a voice channel during Among Us matches</p>
+  <a href="https://discord.com/oauth2/authorize?client_id=753741527674781706&permissions=4194304&scope=bot"><b>Click here to add Amongcord to your server</b></a>
 </div>
 
 ## Commands
