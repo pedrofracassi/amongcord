@@ -15,6 +15,10 @@ class GameManager {
   }
 
   endGame (guildId) {
+    Game.players.forEach(player => {
+        player.member.voice.setMute(false)
+    })
+    
     console.log(`Ending game on ${guildId}`)
     return this.games.delete(guildId)
   }
