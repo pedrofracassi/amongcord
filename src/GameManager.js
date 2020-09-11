@@ -15,7 +15,7 @@ class GameManager {
   }
 
   endGame (guildId) {
-    Game.players.forEach(player => {
+    this.getGame(guildId).players.forEach(player => {
         player.member.voice.setMute(false)
     })
     
