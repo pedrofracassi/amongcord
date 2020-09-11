@@ -1,5 +1,9 @@
-# amongcord
-Simple Discord bot to control a voice channel during Among Us matches
+<div align="center">
+  <img height="200" src="https://svgshare.com/i/PXE.svg">
+  <p>Discord bot for controlling a voice channel during Among Us matches</p>
+</div>
+
+## Commands
 
 | Command | Description |
 |------|-----|
@@ -13,5 +17,7 @@ Simple Discord bot to control a voice channel during Among Us matches
 | `,lobby` | Sets the stage to **Lobby**, marks everyone as alive and unmutes them |
 | `,dead <color>` | Marks a player as dead by their color. Dead players are kept muted during the discussion stage. |
 | `,alive <color>` | Marks a player as alive by their color |
+
+## Screenshot
 
 ![image](https://user-images.githubusercontent.com/25179120/92854197-1b488380-f3c7-11ea-8c52-f2dc7a94edb5.png)
