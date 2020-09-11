@@ -1,5 +1,5 @@
 module.exports = class Utils {
-  getFormattedList (array) {
+  static getFormattedList (array) {
     return array.map(c => `\`${c}\``).join(', ')
   }
 }
