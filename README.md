@@ -1,6 +1,6 @@
 <div align="center">
   <img height="200" src="https://svgshare.com/i/PXE.svg">
-  <p>Discord bot for controlling a voice channel during Among Us matches</p>
+  <p>Discord bot for controlling voice channels during Among Us matches</p>
   <a href="https://amongcord.pedrofracassi.me/add"><b>Click here to add Amongcord to your server</b></a>
 </div>
 

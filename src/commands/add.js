@@ -9,6 +9,6 @@ module.exports = class Add extends Command {
   }
 
   run ({ message }) {
-    message.channel.send('**Click this link to add Amongcord to your server:**\n <https://amongcord.pedrofracassi.me/add>')
+    message.channel.send('**Click this link to add Amongcord to your server:**\n<https://amongcord.pedrofracassi.me/add>')
   }
 }
