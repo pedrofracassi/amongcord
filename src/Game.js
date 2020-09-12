@@ -21,12 +21,14 @@ class Game {
   addPlayer (member, color) {
     const player = new Player(member, color)
     this.players.push(player)
+    this.updatePlayerMute(player)
     return player
   }
 
   removePlayer (member) {
     const player = this.getPlayer(member)
     this.players.splice(this.players.indexOf(player), 1)
+    this.updatePlayerMute(player)
   }
 
   getPlayer (member) {
@@ -69,6 +71,7 @@ class Game {
 
   async updatePlayerMute (player) {
     if (player.member.user.bot) return
+    if (!this.players.includes(player)) return player.member.voice.setMute(false)
     switch (this.gameStage) {
       case GameStages.LOBBY: 
         await player.member.voice.setMute(false)
