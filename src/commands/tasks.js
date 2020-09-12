@@ -10,7 +10,7 @@ module.exports = class Tasks extends Command {
       aliases: [ 'ts' ],
       description: 'Sets the stage to tasks and mutes everyone',
 
-      gameExistenceRequirement: true,
+      gameExistenceRequirement: GameExistenceRequirement.GAME,
       voiceChannelOnly: true
     })
   }

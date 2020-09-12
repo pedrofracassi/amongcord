@@ -13,8 +13,8 @@ module.exports = class EndGame extends Command {
     })
   }
 
-  run ({ message, gameManager, prefix }) {
-    gameManager.endGame(message.guild.id)
+  run ({ message, gameManager, prefix, voiceChannel }) {
+    gameManager.endGame(voiceChannel)
     message.channel.send(`Game ended. Start a new one with \`${prefix}newgame\``)
   }
 }

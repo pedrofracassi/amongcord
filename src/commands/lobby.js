@@ -10,7 +10,8 @@ module.exports = class Lobby extends Command {
       aliases: [ 'lb' ],
       description: 'Sets the stage to Lobby, marks everyone as alive and unmutes them',
 
-      gameExistenceRequirement: GameExistenceRequirement.GAME
+      gameExistenceRequirement: GameExistenceRequirement.GAME,
+      voiceChannelOnly: true
     })
   }
 
