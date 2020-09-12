@@ -8,20 +8,20 @@ const GameParticipationRequirement = require('../GameParticipationRequirement')
 module.exports = class Join extends Command {
   constructor () {
     super({
-      name: 'join',
-      aliases: [ 'j' ],
+      name: 'kick',
+      aliases: [ 'k' ],
       usage: '<color>',
-      description: 'Joins the current game as a color',
+      description: 'Removes a player from the game',
 
       gameExistenceRequirement: GameExistenceRequirement.GAME,
-      gameParticipationRequirement: GameParticipationRequirement.NOT_PARTICIPATING,
-      colorRequirement: ColorRequirement.AVAILABLE
+      colorRequirement: ColorRequirement.OCCUPIED
     })
   }
 
-  run ({ message, game, emojis }) {
+  run ({ message, game }) {
     const color = message.content.split(' ')[1]
-    const player = game.addPlayer(message.member, color)
-    message.channel.send(`You joined the game as ${Utils.getPlayerEmoji(player, emojis)} \`${player.color}\``)
+    const player = game.getPlayerByColor(color)
+    game.removePlayer(player.member)
+    return message.channel.send(`**${player.member.user.tag}** has been kicked from the game.`)
   }
 }

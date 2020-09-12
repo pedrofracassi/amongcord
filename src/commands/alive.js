@@ -18,11 +18,11 @@ module.exports = class Alive extends Command {
     })
   }
 
-  run ({ message, game }) {
+  run ({ message, game, emojis }) {
     const colorArgument = message.content.split(' ')[1]
     const color = colorArgument.toLowerCase()
     const player = game.getPlayerByColor(color)
     game.setPlayerAlive(player.member, true)
-    return message.channel.send(`**${player.member.user.tag}** (${player.color}) has been marked as alive.`)
+    return message.channel.send(`**${player.member.user.tag}** (${player.color}) has been marked as alive.  ${Utils.getPlayerEmoji(player, emojis)}`)
   }
 }
