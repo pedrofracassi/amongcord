@@ -17,6 +17,8 @@ module.exports = class Players extends Command {
   }
 
   run ({ message, game, voiceChannel, emojis }) {
+    if (!game || game.players.length === 0) return message.channel.send('There are no players in this game.')
+
     const embed = new MessageEmbed()
       .setFooter(voiceChannel.name)
 
