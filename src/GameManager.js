@@ -1,4 +1,5 @@
 const Game = require('./Game')
+const GameStages = require('./GameStages')
 
 class GameManager {
   constructor () {
@@ -17,6 +18,7 @@ class GameManager {
 
   endGame (voiceChannel) {
     console.log(`Ending game on ${voiceChannel.name}`)
+    this.getGame(voiceChannel).setStage(GameStages.LOBBY)
     return this.games.delete(voiceChannel.id)
   }
 
