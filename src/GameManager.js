@@ -5,22 +5,23 @@ class GameManager {
     this.games = new Map()
   }
 
-  getGame (guildId) {
-    return this.games.get(guildId)
+  getGame (voiceChannel) {
+    return voiceChannel && this.games.get(voiceChannel.id)
   }
 
-  newGame (guildId, voiceChannel) {
-    console.log(`Starting new game on ${guildId}`)
-    this.games.set(guildId, new Game(voiceChannel))
+  newGame (voiceChannel) {
+    console.log(`Starting new game on ${voiceChannel.name}`)
+    this.games.set(voiceChannel.id, new Game(voiceChannel))
+    return this.games.get(voiceChannel.id)
   }
 
-  endGame (guildId) {
-    console.log(`Ending game on ${guildId}`)
-    return this.games.delete(guildId)
+  endGame (voiceChannel) {
+    console.log(`Ending game on ${voiceChannel.name}`)
+    return this.games.delete(voiceChannel.id)
   }
 
-  hasGame (guildId) {
-    return this.games.has(guildId)
+  hasGame (voiceChannel) {
+    return voiceChannel && this.games.has(voiceChannel.id)
   }
 }
 

@@ -9,12 +9,13 @@ class Game {
     this.players = []
   }
 
-  setStage (stage) {
+  async setStage (stage) {
     this.gameStage = stage
-    this.players.forEach(player => {
+
+    for (const player of this.players) {
       if (stage.toLowerCase() === GameStages.LOBBY) player.setAlive(true)
-      this.updatePlayerMute(player)
-    })
+      await this.updatePlayerMute(player)
+    }
   }
 
   addPlayer (member, color) {
@@ -46,6 +47,10 @@ class Game {
     return !!this.getPlayerByColor(color.toLowerCase())
   }
 
+  isColorAvailable (color) {
+    return !this.getPlayerByColor(color.toLowerCase())
+  }
+
   getAvailableColors () {
     return Object.keys(PlayerColors).map(k => PlayerColors[k]).filter(c => !this.getPlayerByColor(c))
   }
@@ -62,21 +67,21 @@ class Game {
     return this.players.filter(p => !!p.alive).map(p => p.color)
   }
 
-  updatePlayerMute (player) {
+  async updatePlayerMute (player) {
     if (player.member.user.bot) return
     switch (this.gameStage) {
       case GameStages.LOBBY: 
-        player.member.voice.setMute(false)
+        await player.member.voice.setMute(false)
         break
       case GameStages.DISCUSSION:
         if (player.alive) {
-          player.member.voice.setMute(false)
+          await player.member.voice.setMute(false)
         } else {
-          player.member.voice.setMute(true)
+          await player.member.voice.setMute(true)
         }
         break
       case GameStages.TASKS:
-        player.member.voice.setMute(true)
+        await player.member.voice.setMute(true)
         break
     }
   }

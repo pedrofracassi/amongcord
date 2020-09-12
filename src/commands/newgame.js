@@ -1,16 +1,21 @@
 const Command = require('../Command')
 
+const GameExistenceRequirement = require('../GameExistenceRequirement')
+
 module.exports = class NewGame extends Command {
   constructor () {
     super({
       name: 'newgame',
       aliases: [ 'ng' ],
-      gameExistenceRequirement: false
+      description: 'Starts a new game',
+
+      gameExistenceRequirement: GameExistenceRequirement.NO_GAME,
+      voiceChannelOnly: true
     })
   }
 
-  run ({ message, gameManager }) {
-    gameManager.newGame(message.guild.id, message.member.voice.channel)
-    message.channel.send('New game started!')
+  run ({ message, gameManager, voiceChannel }) {
+    gameManager.newGame(voiceChannel)
+    message.channel.send(`Started a new game in **${voiceChannel.name}**!`)
   }
 }

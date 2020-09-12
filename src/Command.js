@@ -3,8 +3,11 @@ class Command {
     this.name = settings.name
     this.aliases = settings.aliases || []
     this.usage = settings.usage || ''
+    this.description = settings.description || ''
 
+    this.voiceChannelOnly = settings.voiceChannelOnly || false
     this.gameExistenceRequirement = settings.gameExistenceRequirement || null
+    this.gameParticipationRequirement = settings.gameParticipationRequirement || null
     this.colorRequirement = settings.colorRequirement || null
   }
 

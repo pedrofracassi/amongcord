@@ -4,7 +4,8 @@ module.exports = class GitHub extends Command {
   constructor () {
     super({
       name: 'github',
-      aliases: [ 'gh' ]
+      aliases: [ 'gh' ],
+      description: 'Links to the bot\'s GitHub page'
     })
   }
 

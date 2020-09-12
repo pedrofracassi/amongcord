@@ -8,7 +8,7 @@
 
 | Command | Description |
 |------|-----|
-| `,newgame` | Starts a new game (overrides the current one if it exists) |
+| `,newgame` | Starts a new game |
 | `,endgame` | Ends the current game |
 | `,join <color>` | Joins the current game as a color |
 | `,leave` | Leaves the current game |

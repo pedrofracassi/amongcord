@@ -1,17 +1,22 @@
 const Command = require('../Command')
+
 const GameStages = require('../GameStages')
+const GameExistenceRequirement = require('../GameExistenceRequirement')
 
 module.exports = class Discussion extends Command {
   constructor () {
     super({
       name: 'discussion',
       aliases: [ 'ds' ],
-      gameExistenceRequirement: true
+      description: 'Sets the stage to discussion, umnutes everyone who is alive',
+
+      gameExistenceRequirement: GameExistenceRequirement.GAME,
+      voiceChannelOnly: true
     })
   }
 
-  run ({ message, game }) {
-    if (!game) return message.channel.send('No game, type `,newgame` to start one!')
+  run ({ message, game, prefix }) {
+    if (!game) return message.channel.send(`No game, type \`${prefix}newgame\` to start one!`)
     game.setStage(GameStages.DISCUSSION)
     message.channel.send('Stage set to **discussion**')
   }
