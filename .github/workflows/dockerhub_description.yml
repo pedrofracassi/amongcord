@@ -20,4 +20,4 @@ jobs:
           env:
             DOCKERHUB_USERNAME: ${{ secrets.DOCKER_USERNAME }}
             DOCKERHUB_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-            DOCKERHUB_REPOSITORY: switchbladebot/invidget
+            DOCKERHUB_REPOSITORY: pedrofracassi/amongcord
