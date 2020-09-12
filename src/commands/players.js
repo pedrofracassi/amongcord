@@ -1,6 +1,8 @@
 const Command = require('../Command')
 
 const GameExistenceRequirement = require('../GameExistenceRequirement')
+const Utils = require('../Utils')
+const { MessageEmbed } = require('discord.js')
 
 module.exports = class Players extends Command {
   constructor () {
@@ -14,7 +16,27 @@ module.exports = class Players extends Command {
     })
   }
 
-  run ({ message, game, voiceChannel }) {
-    message.channel.send(`**${voiceChannel.name} - Players (${game.players.length}/10):**\n${game.players.map(p => ` - \`${p.member.user.tag}\` (${p.color}) ${p.alive ? '' : '☠'}`).join('\n')}`)
+  run ({ message, game, voiceChannel, emojis }) {
+    const embed = new MessageEmbed()
+      .setFooter(voiceChannel.name)
+
+    const alive = game.players.filter(p => p.alive)
+    // alive.map(p => `${Utils.getPlayerEmoji(p)} ${p.member.user}`)
+    
+    const dead = game.players.filter(p => !p.alive)
+    // dead.map(p => `${Utils.getPlayerEmoji(p)} ${p.member.user}`)
+
+    message.channel.send([
+      alive.length > 0 ? [
+        `**Alive (${alive.length})**`,
+        alive.map(p => `${Utils.getPlayerEmoji(p, emojis)} \`${p.member.user.tag}\``).join('\n')
+      ].join('\n') : null,
+      '',
+      dead.length > 0 ? [
+        `**Dead (${dead.length})**`,
+        dead.map(p => `${Utils.getPlayerEmoji(p, emojis)} \`${p.member.user.tag}\``).join('\n')
+      ].join('\n') : null
+    ])
+    //message.channel.send(`**${voiceChannel.name} - Players (${game.players.length}/10):**\n${game.players.map(p => ).join('\n')}`)
   }
 }

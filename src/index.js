@@ -13,6 +13,7 @@ const Utils = require('./Utils')
 
 let gameManager = new GameManager()
 let commands = []
+let emojis = new Map()
 
 const prefix = process.env.PREFIX || ','
 
@@ -24,6 +25,10 @@ glob.sync('./src/commands/**/*.js').forEach(file => {
 
 client.on('ready', () => {
   console.log(`Logged in as ${client.user.tag}!`)
+  if (process.env.GUILD_ID) client.guilds.cache.get(process.env.GUILD_ID).emojis.cache.each(e => {
+    console.log(`Loaded ${e}`)
+    emojis.set(e.name, e.toString())
+  })
 })
 
 client.on('ratelimit', ratelimitInfo => {
@@ -99,7 +104,8 @@ client.on('message', message => {
         prefix,
         voiceChannel: message.member.voice.channel,
         commands,
-        client
+        client,
+        emojis
       })
     }
   })
