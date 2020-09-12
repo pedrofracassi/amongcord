@@ -3,8 +3,10 @@ const Player = require('./Player')
 const PlayerColors = require('./PlayerColors')
 
 class Game {
-  constructor (voiceChannel) {
+  constructor (voiceChannel, textChannel, manager) {
+    this.manager = manager
     this.voiceChannel = voiceChannel
+    this.textChannel = textChannel
     this.gameStage = GameStages.LOBBY
     this.players = []
   }
@@ -29,6 +31,10 @@ class Game {
     const player = this.getPlayer(member)
     this.players.splice(this.players.indexOf(player), 1)
     this.updatePlayerMute(player)
+    if (this.players.length === 0) {
+      this.textChannel.send(`The game in **${this.voiceChannel.name}** has ended because there were no players left.`)
+      this.manager.endGame(this.voiceChannel)
+    }
   }
 
   getPlayer (member) {

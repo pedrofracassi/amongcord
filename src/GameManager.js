@@ -10,9 +10,9 @@ class GameManager {
     return voiceChannel && this.games.get(voiceChannel.id)
   }
 
-  newGame (voiceChannel) {
+  newGame (voiceChannel, textChannel) {
     console.log(`Starting new game on ${voiceChannel.name}`)
-    this.games.set(voiceChannel.id, new Game(voiceChannel))
+    this.games.set(voiceChannel.id, new Game(voiceChannel, textChannel, this))
     return this.games.get(voiceChannel.id)
   }
 

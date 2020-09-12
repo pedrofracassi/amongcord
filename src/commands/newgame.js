@@ -15,7 +15,7 @@ module.exports = class NewGame extends Command {
   }
 
   run ({ message, gameManager, voiceChannel }) {
-    gameManager.newGame(voiceChannel)
+    gameManager.newGame(voiceChannel, message.channel)
     message.channel.send(`Started a new game in **${voiceChannel.name}**!`)
   }
 }
