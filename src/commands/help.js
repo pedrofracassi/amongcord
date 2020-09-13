@@ -17,7 +17,7 @@ module.exports = class Commands extends Command {
         .setThumbnail(client.user.avatarURL())
         .setColor(0x7289DA)
         .setDescription([
-          commands.map(c => `**\`${prefix}${c.name}${c.usage ? ` ${c.usage}` : ''}\`** - ${c.description}`).join('\n'),
+          commands.filter(c => !c.hidden).map(c => `**\`${prefix}${c.name}${c.usage ? ` ${c.usage}` : ''}\`** - ${c.description}`).join('\n'),
           '',
           '[**Add Amongcord to your server**](https://amongcord.pedrofracassi.me/add)',
           [

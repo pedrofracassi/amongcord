@@ -4,6 +4,7 @@ class Command {
     this.aliases = settings.aliases || []
     this.usage = settings.usage || ''
     this.description = settings.description || ''
+    this.hidden = settings.hidden || false
 
     this.voiceChannelOnly = settings.voiceChannelOnly || false
     this.gameExistenceRequirement = settings.gameExistenceRequirement || null
