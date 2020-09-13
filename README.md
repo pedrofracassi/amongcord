@@ -7,20 +7,18 @@
 ## Commands
 
 | Command | Description |
-|------|-----|
-| `,newgame` | Starts a new game |
-| `,endgame` | Ends the current game |
-| `,join <color>` | Joins the current game as a color |
-| `,leave` | Leaves the current game |
-| `,players` | Lists all players in the current game |
-| `,tasks` | Sets the stage to **Tasks** and mutes everyone |
-| `,discussion` | Sets the stage to **Discussion**, umnutes everyone who is alive |
-| `,lobby` | Sets the stage to **Lobby**, marks everyone as alive and unmutes them |
-| `,dead <color>` | Marks a player as dead by their color. Dead players are kept muted during the discussion stage. |
-| `,alive <color>` | Marks a player as alive by their color |
-| `,github` | Links to this GitHub page |
-| `,add` | Shows the bot's invite link |
-
-## Screenshot
-
-![image](https://user-images.githubusercontent.com/25179120/92854197-1b488380-f3c7-11ea-8c52-f2dc7a94edb5.png)
+|-|-|
+| `.add` | Shows the bot's invite link |
+| `.alive <color>` | Marks a player as alive |
+| `.dead <color>` |  Marks a player as dead. Dead players are kept muted during the discussion stage. |
+| `.discussion` | Sets the stage to discussion, umnutes everyone who is alive |
+| `.endgame` | Ends the current game |
+| `.github` | Links to the bot's GitHub page |
+| `.help` | Lists all of the bot's commands |
+| `.join <color>` | Joins the current game as a color |
+| `.kick <color>` | Removes a player from the game |
+| `.leave` | Leaves the current game |
+| `.lobby` | Sets the stage to Lobby, marks everyone as alive and unmutes them |
+| `.newgame` | Starts a new game |
+| `.players` | Lists all players in the current game |
+| `.tasks` | Sets the stage to tasks and mutes everyone |
