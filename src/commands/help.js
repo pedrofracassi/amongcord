@@ -19,10 +19,11 @@ module.exports = class Commands extends Command {
         .setDescription([
           commands.map(c => `**\`${prefix}${c.name}${c.usage ? ` ${c.usage}` : ''}\`** - ${c.description}`).join('\n'),
           '',
+          '[**Add Amongcord to your server**](https://amongcord.pedrofracassi.me/add)',
           [
-            '[**Add Amongcord to your server**](https://amongcord.pedrofracassi.me/add)',
             '[GitHub](https://github.com/pedrofracassi/amongcord)',
             '[Twitter](https://twitter.com/plfracassi_)',
+            '[Patreon](https://patreon.com/pedrofracassi)',
             `${client.guilds.cache.size.toLocaleString()} servers`
           ].join(' | '),
         ])
