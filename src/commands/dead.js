@@ -8,7 +8,7 @@ module.exports = class NewGame extends Command {
   constructor () {
     super({
       name: 'dead',
-      aliases: [ 'dead' ],
+      aliases: [ 'd' ],
       usage: '<color>',
       description: ' Marks a player as dead. Dead players are kept muted during the discussion stage.',
 
