@@ -6,19 +6,52 @@
 
 ## Commands
 
-| Command | Description |
-|-|-|
-| `.add` | Shows the bot's invite link |
-| `.alive <color>` | Marks a player as alive |
-| `.dead <color>` |  Marks a player as dead. Dead players are kept muted during the discussion stage. |
-| `.discussion` | Sets the stage to discussion, umnutes everyone who is alive |
-| `.endgame` | Ends the current game |
-| `.github` | Links to the bot's GitHub page |
-| `.help` | Lists all of the bot's commands |
-| `.join <color>` | Joins the current game as a color |
-| `.kick <color>` | Removes a player from the game |
-| `.leave` | Leaves the current game |
-| `.lobby` | Sets the stage to Lobby, marks everyone as alive and unmutes them |
-| `.newgame` | Starts a new game |
-| `.players` | Lists all players in the current game |
-| `.tasks` | Sets the stage to tasks and mutes everyone |
+| Command | Aliases* | Description |
+|-|-|-|
+| `.add` | `.invite` | Shows the bot's invite link |
+| `.alive <color>` | `.a` | Marks a player as alive |
+| `.commandsmd` | `.md` | Command list markdown |
+| `.dead <color>` | `.d` |  Marks a player as dead. Dead players are kept muted during the discussion stage. |
+| `.discussion` | `.ds` | Sets the stage to discussion, umnutes everyone who is alive |
+| `.endgame` | `.eg` | Ends the current game |
+| `.github` | `.gh` | Links to the bot's GitHub page |
+| `.help` | `.h` | Lists all of the bot's commands |
+| `.join <color>` | `.j` | Joins the current game as a color |
+| `.kick <color>` | `.k` | Removes a player from the game |
+| `.leave` | `.l` | Leaves the current game |
+| `.lobby` | `.lb` | Sets the stage to Lobby, marks everyone as alive and unmutes them |
+| `.newgame` | `.ng` | Starts a new game |
+| `.players` | `.p` | Lists all players in the current game |
+| `.tasks` | `.ts` | Sets the stage to tasks and mutes everyone |
+
+###### **\*** aliases have not been implemented yet.
+
+## Screenshots
+
+TODO
+
+## Self-hosting
+
+If you prefer you run the bot yourself instead of using the [hosted instance](https://amongcord.pedrofracassi.me/add), you can either use **Docker** or **clone the repository directly**. For both methods, you'll need a  [bot token](https://github.com/reactiflux/discord-irc/wiki/Creating-a-discord-bot-&-getting-a-token) and the ID of a server that has the [emojis the bot needs](https://github.com/pedrofracassi/amongcord/tree/master/emojis) (the bot needs to be in the server).
+
+### Docker
+
+Images are automatically built and pushed to [Docker Hub](https://hub.docker.com/r/pedrofracassi/amongcord) whenever the source code changes. You can run your own instance of the bot with the command below:
+
+```bash
+$ docker run -e DISCORD_TOKEN=<your discord token> GUILD_ID=<emoji guild id> -d pedrofracassi/amongcord
+```
+
+### Cloning directly
+
+Although not recommended for production, cloning the repository should work just fine for experimental purposes. If you want to, you can use a process manager like [pm2](https://pm2.keymetrics.io/) to keep the node process running, but bear in mind that **I don't run the bot this way and probably won't be able to help you out.**
+
+1. Clone the repository
+   > `git clone https://github.com/pedrofracassi/amongcord`
+2. Enter the directory you just cloned into
+   > `cd amongcord`
+3. Install the dependencies
+   > `npm install`
+4. Set the **DISCORD_TOKEN** and **GUILD_ID** environment variables
+5. Run the bot
+   > `node src/.`
