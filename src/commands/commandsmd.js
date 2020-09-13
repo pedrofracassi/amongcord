@@ -1,5 +1,4 @@
 const Command = require('../Command')
-const { MessageEmbed } = require('discord.js')
 
 
 module.exports = class CommandsMD extends Command {
