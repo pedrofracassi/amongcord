@@ -6,23 +6,22 @@
 
 ## Commands
 
-| Command | Aliases* | Description |
+| Command | Aliases | Description |
 |-|-|-|
-| `.add` | `.invite` | Shows the bot's invite link |
-| `.alive <color>` | `.a` | Marks a player as alive |
-| `.commandsmd` | `.md` | Command list markdown |
-| `.dead <color>` | `.d` |  Marks a player as dead. Dead players are kept muted during the discussion stage. |
-| `.discussion` | `.ds` | Sets the stage to discussion, umnutes everyone who is alive |
-| `.endgame` | `.eg` | Ends the current game |
-| `.github` | `.gh` | Links to the bot's GitHub page |
-| `.help` | `.h` | Lists all of the bot's commands |
-| `.join <color>` | `.j` | Joins the current game as a color |
-| `.kick <color>` | `.k` | Removes a player from the game |
-| `.leave` | `.l` | Leaves the current game |
-| `.lobby` | `.lb` | Sets the stage to Lobby, marks everyone as alive and unmutes them |
-| `.newgame` | `.ng` | Starts a new game |
-| `.players` | `.p` | Lists all players in the current game |
-| `.tasks` | `.ts` | Sets the stage to tasks and mutes everyone |
+| `,add` | `,invite` | Shows the bot's invite link |
+| `,alive <color>` | `,a` | Marks a player as alive |
+| `,dead <color>` | `,d` |  Marks a player as dead. Dead players are kept muted during the discussion stage. |
+| `,discussion` | `,ds` | Sets the stage to discussion, umnutes everyone who is alive |
+| `,endgame` | `,eg` | Ends the current game |
+| `,github` | `,gh` | Links to the bot's GitHub page |
+| `,help` | `,h` | Lists all of the bot's commands |
+| `,join <color>` | `,j` | Joins the current game as a color |
+| `,kick <color>` | `,k` | Removes a player from the game |
+| `,leave` | `,l` | Leaves the current game |
+| `,lobby` | `,lb` | Sets the stage to Lobby, marks everyone as alive and unmutes them |
+| `,newgame` | `,ng` | Starts a new game |
+| `,players` | `,p` | Lists all players in the current game |
+| `,tasks` | `,ts` | Sets the stage to tasks and mutes everyone |
 
 ###### **\*** aliases have not been implemented yet.
 
