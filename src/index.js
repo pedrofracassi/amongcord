@@ -38,8 +38,10 @@ client.on('ratelimit', ratelimitInfo => {
 client.on('voiceStateUpdate', (oldState, newState) => {
   if (oldState.channelID !== newState.channelID && gameManager.hasGame(oldState.channel)) {
     const game = gameManager.getGame(oldState.channel)
-    game.textChannel.send(`**${oldState.member.user.tag}** has been removed from the game in **${oldState.channel.name}** because they've left the channel.`)
-    game.removePlayer(newState.member)
+    if (game.getPlayer(oldState.member)) {
+      game.textChannel.send(`**${oldState.member.user.tag}** has been removed from the game in **${oldState.channel.name}** because they've left the channel.`)
+      game.removePlayer(newState.member)
+    }
   }
 })
 
