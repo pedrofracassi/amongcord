@@ -11,6 +11,7 @@ module.exports = class Tasks extends Command {
       description: 'Sets the stage to tasks and mutes everyone',
 
       gameExistenceRequirement: GameExistenceRequirement.GAME,
+      gameParticipationRequirement: GameParticipationRequirement.PARTICIPATING,
       voiceChannelOnly: true
     })
   }

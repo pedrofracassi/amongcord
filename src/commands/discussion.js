@@ -11,6 +11,7 @@ module.exports = class Discussion extends Command {
       description: 'Sets the stage to discussion, umnutes everyone who is alive',
 
       gameExistenceRequirement: GameExistenceRequirement.GAME,
+      gameParticipationRequirement: GameParticipationRequirement.PARTICIPATING,
       voiceChannelOnly: true
     })
   }
