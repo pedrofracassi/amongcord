@@ -2,6 +2,7 @@ const Command = require('../Command')
 
 const GameStages = require('../GameStages')
 const GameExistenceRequirement = require('../GameExistenceRequirement')
+const GameParticipationRequirement = require('../GameParticipationRequirement')
 
 module.exports = class Tasks extends Command {
   constructor () {
