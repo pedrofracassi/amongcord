@@ -4,6 +4,8 @@
   <a href="https://amongcord.pedrofracassi.me/add"><b>Click here to add Amongcord to your server</b></a>
 </div>
 
+---
+
 ## Commands
 
 | Command | Aliases* | Description |
