@@ -19,6 +19,12 @@ module.exports = class Lobby extends Command {
 
   run ({ message, game }) {
     game.setStage(GameStages.LOBBY)
-    message.channel.send('Stage set to **lobby**')
+    message.channel.send({
+      content: 'Stage set to **lobby**. Thanks for playing!',
+      embed: {
+        description: `If you appreciate **Amongcord**, please consider [supporting the creator on Patreon](https://patreon.com/pedrofracassi) :)`,
+        color: 0xf96854
+      }
+    })
   }
 }
