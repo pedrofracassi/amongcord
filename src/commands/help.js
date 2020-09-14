@@ -24,7 +24,7 @@ module.exports = class Commands extends Command {
             '[GitHub](https://github.com/pedrofracassi/amongcord)',
             '[Twitter](https://twitter.com/plfracassi_)',
             '[Patreon](https://patreon.com/pedrofracassi)',
-            '[Discord](https://discord.gg/ENcM67N)'
+            '[Discord](https://discord.gg/ENcM67N)',
             `${client.guilds.cache.size.toLocaleString()} servers`
           ].join(' | '),
         ])
