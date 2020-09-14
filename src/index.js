@@ -11,11 +11,37 @@ const GameParticipationRequirement = require('./GameParticipationRequirement')
 const PlayerColors = require('./PlayerColors')
 const Utils = require('./Utils')
 
-let gameManager = new GameManager()
 let commands = []
 let emojis = new Map()
 
 const prefix = process.env.PREFIX || ','
+
+const io = require('socket.io')(process.env.PORT || 8081)
+
+let gameManager = new GameManager(io)
+
+io.on('connection', socket => {
+  socket.on('join', id => {
+    console.log('Tried to join', id)
+    if (gameManager.hasGameBySyncId(id)) {
+      socket.join(id)
+      socket.emit('gameStateUpdate', gameManager.getGameBySyncId(id).toJSON())
+    } else {
+      socket.emit('joinFailed')
+    }
+  })
+
+  socket.on('setStage', data => {
+    const { sync_id, stage } = JSON.parse(data)
+    gameManager.getGameBySyncId(sync_id).setStage(stage)
+  })
+
+  socket.on('setAlive', data => {
+    const { sync_id, color, alive } = JSON.parse(data)
+    const game = gameManager.getGameBySyncId(sync_id)
+    game.setPlayerAlive(game.getPlayerByColor(color).member, alive)
+  })
+})
 
 glob.sync('./src/commands/**/*.js').forEach(file => {
   console.log(`Loading ${file}`)
