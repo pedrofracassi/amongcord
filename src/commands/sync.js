@@ -16,6 +16,7 @@ module.exports = class Sync extends Command {
   }
 
   run ({ message, game }) {
-    message.channel.send(`Open https://sync.amongcord.xyz in a browser/smartphone and enter **\`${game.syncId}\`** to control the bot.`)
+    message.channel.send(`Open ${process.env.SYNC_BASE_URL}/?id=${game.syncId} in a browser/smartphone to control the bot.`)
+    // message.channel.send(`Open https://sync.amongcord.xyz in a browser/smartphone and enter **\`${game.syncId}\`** to control the bot.`)
   }
 }
