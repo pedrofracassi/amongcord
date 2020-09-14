@@ -32,8 +32,8 @@ io.on('connection', socket => {
   })
 
   socket.on('setStage', data => {
-    const { sync_id, stage } = JSON.parse(data)
-    gameManager.getGameBySyncId(sync_id).setStage(stage)
+    const { sync_id, game_stage } = JSON.parse(data)
+    gameManager.getGameBySyncId(sync_id).setStage(game_stage)
   })
 
   socket.on('setAlive', data => {
