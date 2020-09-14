@@ -55,3 +55,8 @@ Although not recommended for production, cloning the repository should work just
 4. Set the **DISCORD_TOKEN** and **GUILD_ID** environment variables
 5. Run the bot
    > `node src/.`
+
+## Similar projects
+
+- [AmongUsBot](https://github.com/alpharaoh/AmongUsBot) - automatically detects tasks/discussion stages with OCR instead of using commands, but needs to be installed on someone's computer.
+- [amongusdiscord](https://github.com/denverquane/amongusdiscord) - same as above, but written in Go. Easier to install as prebuilt executables are provided.
