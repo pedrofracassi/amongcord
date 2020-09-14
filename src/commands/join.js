@@ -20,7 +20,7 @@ module.exports = class Join extends Command {
   }
 
   run ({ message, game, emojis }) {
-    const color = message.content.split(' ')[1]
+    const color = message.content.split(' ')[1].toLowerCase()
     const player = game.addPlayer(message.member, color)
     message.channel.send(`You joined the game as ${Utils.getPlayerEmoji(player, emojis)} \`${player.color}\``)
   }
