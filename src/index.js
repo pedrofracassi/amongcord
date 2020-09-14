@@ -16,7 +16,7 @@ let emojis = new Map()
 
 const prefix = process.env.PREFIX || ','
 
-const io = require('socket.io')(process.env.PORT || 8081)
+const io = require('socket.io')(process.env.PORT || 80)
 
 let gameManager = new GameManager(io)
 
