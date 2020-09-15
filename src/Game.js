@@ -5,7 +5,7 @@ const PlayerColors = require('./PlayerColors')
 class Game {
   constructor (voiceChannel, textChannel, manager) {
     this.manager = manager
-    this.syncId = Math.random().toString(36).substring(2, 7).toUpperCase()
+    this.syncId = Math.random().toString(36).substring(2, 8).toUpperCase()
     this.voiceChannel = voiceChannel
     this.textChannel = textChannel
     this.gameStage = GameStages.LOBBY
@@ -18,7 +18,7 @@ class Game {
       game_stage: this.gameStage,
       players: this.players.map(p => {
         return {
-          tag: p.member.user.tag,
+          name: p.member.displayName,
           color: p.color,
           alive: p.alive
         }
