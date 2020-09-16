@@ -16,6 +16,7 @@ class Game {
     return {
       sync_id: this.syncId,
       game_stage: this.gameStage,
+      channel_name: this.voiceChannel.name,
       players: this.players.map(p => {
         return {
           name: p.member.displayName,
@@ -51,6 +52,7 @@ class Game {
   addPlayer (member, color) {
     const player = new Player(member, color)
     this.players.push(player)
+    console.log(`${member.user.tag} (${member.user.id}) joined ${this.syncId} as ${color} in ${this.voiceChannel.guild.name} (${this.voiceChannel.guild.id}) / ${this.voiceChannel.name} (${this.voiceChannel.id})`)
     this.sendStateUpdate()
     this.updatePlayerMute(player)
     return player
@@ -59,6 +61,7 @@ class Game {
   removePlayer (member) {
     const player = this.getPlayer(member)
     this.players.splice(this.players.indexOf(player), 1)
+    console.log(`${member.user.tag} (${member.user.id}) left ${this.syncId} in ${this.voiceChannel.guild.name} (${this.voiceChannel.guild.id}) / ${this.voiceChannel.name} (${this.voiceChannel.id})`)
     this.sendStateUpdate()
     this.updatePlayerMute(player)
     if (this.players.length === 0) {

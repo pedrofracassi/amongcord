@@ -8,7 +8,8 @@ module.exports = class ToJSON extends Command {
   constructor () {
     super({
       name: 'tojson',
-      description: 'game as json',
+      description: 'Shows the current game as JSON',
+      hidden: true,
 
       gameExistenceRequirement: GameExistenceRequirement.GAME,
       voiceChannelOnly: true,

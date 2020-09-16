@@ -16,14 +16,14 @@ class GameManager {
   }
 
   newGame (voiceChannel, textChannel) {
-    console.log(`Starting new game on ${voiceChannel.name}`)
+    console.log(`Starting new game im ${voiceChannel.guild.name} (${voiceChannel.guild.id}) / ${voiceChannel.name} (${voiceChannel.id})`)
     this.games.set(voiceChannel.id, new Game(voiceChannel, textChannel, this))
     return this.games.get(voiceChannel.id)
   }
 
   endGame (voiceChannel) {
-    console.log(`Ending game on ${voiceChannel.name}`)
     const game = this.getGame(voiceChannel)
+    console.log(`Ending game ${game.syncId} in ${voiceChannel.guild.name} (${voiceChannel.guild.id}) / ${voiceChannel.name} (${voiceChannel.id})`)
     game.setStage(GameStages.LOBBY)
     this.io.to(game.syncId).emit('gameEnded')
     return this.games.delete(voiceChannel.id)
