@@ -11,11 +11,43 @@ const GameParticipationRequirement = require('./GameParticipationRequirement')
 const PlayerColors = require('./PlayerColors')
 const Utils = require('./Utils')
 
-let gameManager = new GameManager()
 let commands = []
 let emojis = new Map()
 
 const prefix = process.env.PREFIX || ','
+
+const io = require('socket.io')(process.env.PORT || 80)
+
+let gameManager = new GameManager(io)
+
+io.on('connection', socket => {
+  socket.on('join', id => {
+    console.log('Sync client trying to join', id)
+    if (gameManager.hasGameBySyncId(id)) {
+      socket.join(id)
+      const game = gameManager.getGameBySyncId(id)
+      console.log(`Sync client connected to ${id} in ${Utils.getGameLogString(game)}`)
+      socket.emit('gameStateUpdate', gameManager.getGameBySyncId(id).toJSON())
+    } else {
+      console.log('Invalid sync code', id)
+      socket.emit('joinFailed')
+    }
+  })
+
+  socket.on('setStage', data => {
+    const { sync_id, game_stage } = JSON.parse(data)
+    const game = gameManager.getGameBySyncId(sync_id)
+    console.log(`Client set the stage to ${game_stage} in game ${game.syncId} at ${Utils.getGameLogString(game)}`)
+    game.setStage(game_stage)
+  })
+
+  socket.on('setAlive', data => {
+    const { sync_id, color, alive } = JSON.parse(data)
+    const game = gameManager.getGameBySyncId(sync_id)
+    console.log(`Client set ${color} to ${alive? 'alive' : 'dead'} in game ${game.syncId} at ${Utils.getGameLogString(game)}`)
+    game.setPlayerAlive(game.getPlayerByColor(color).member, alive)
+  })
+})
 
 glob.sync('./src/commands/**/*.js').forEach(file => {
   console.log(`Loading ${file}`)

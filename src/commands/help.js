@@ -11,13 +11,15 @@ module.exports = class Commands extends Command {
     })
   }
 
-  run ({ message, commands, prefix, client }) {
+  run ({ message, commands, prefix, client, emojis }) {
     message.channel.send(
       new MessageEmbed()
         .setThumbnail(client.user.avatarURL())
         .setColor(0x7289DA)
         .setDescription([
-          commands.filter(c => !c.hidden).map(c => `**\`${prefix}${c.name}${c.usage ? ` ${c.usage}` : ''}\`** - ${c.description}`).join('\n'),
+          commands.filter(c => !c.hidden).map(c => {
+            return `**\`${prefix}${c.name}${c.usage ? ` ${c.usage}` : ''}\`** - ${c.description} ${c.new ? emojis.get('new') || '' : ''}`
+          }).join('\n'),
           '',
           '[**Add Amongcord to your server**](https://amongcord.pedrofracassi.me/add)',
           [

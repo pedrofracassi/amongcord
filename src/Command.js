@@ -5,6 +5,7 @@ class Command {
     this.usage = settings.usage || ''
     this.description = settings.description || ''
     this.hidden = settings.hidden || false
+    this.new = settings.new || false
 
     this.voiceChannelOnly = settings.voiceChannelOnly || false
     this.gameExistenceRequirement = settings.gameExistenceRequirement || null

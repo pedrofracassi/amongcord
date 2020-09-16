@@ -14,8 +14,8 @@ module.exports = class NewGame extends Command {
     })
   }
 
-  run ({ message, gameManager, voiceChannel }) {
-    gameManager.newGame(voiceChannel, message.channel)
-    message.channel.send(`Started a new game in **${voiceChannel.name}**!`)
+  run ({ message, gameManager, voiceChannel, prefix }) {
+    const game = gameManager.newGame(voiceChannel, message.channel)
+    message.channel.send(`Started a new game in **${voiceChannel.name}**! Type \`${prefix}sync\` to control it through your phone.`)
   }
 }

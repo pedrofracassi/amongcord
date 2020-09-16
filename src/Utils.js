@@ -33,4 +33,8 @@ module.exports = class Utils {
       return emojis.get(`${player.color}_dead`)
     }
   }
+
+  static getGameLogString (game) {
+    return `${game.voiceChannel.guild.name} (${game.voiceChannel.guild.id}) / ${game.voiceChannel.name} (${game.voiceChannel.id})`
+  }
 }

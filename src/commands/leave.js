@@ -17,7 +17,7 @@ module.exports = class Leave extends Command {
   }
 
   run ({ message, game }) {
-    game.removePlayer(message.member)
     message.channel.send(`You left the game`)
+    game.removePlayer(message.member)
   }
 }

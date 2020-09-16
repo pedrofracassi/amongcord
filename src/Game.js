@@ -5,24 +5,55 @@ const PlayerColors = require('./PlayerColors')
 class Game {
   constructor (voiceChannel, textChannel, manager) {
     this.manager = manager
+    this.syncId = Math.random().toString(36).substring(2, 8).toUpperCase()
     this.voiceChannel = voiceChannel
     this.textChannel = textChannel
     this.gameStage = GameStages.LOBBY
     this.players = []
   }
 
+  toJSON () {
+    return {
+      sync_id: this.syncId,
+      game_stage: this.gameStage,
+      channel_name: this.voiceChannel.name,
+      players: this.players.map(p => {
+        return {
+          name: p.member.displayName,
+          color: p.color,
+          alive: p.alive
+        }
+      })
+    }
+  }
+
+  sendStateUpdate () {
+    this.manager.io.to(this.syncId).emit('gameStateUpdate', this.toJSON())
+  }
+
   async setStage (stage) {
     this.gameStage = stage
-
+    
+    if (stage.toLowerCase() === GameStages.LOBBY) this.setAliveAll(true)
+    
+    this.sendStateUpdate()
+    
     for (const player of this.players) {
-      if (stage.toLowerCase() === GameStages.LOBBY) player.setAlive(true)
       await this.updatePlayerMute(player)
+    }
+  }
+
+  setAliveAll (alive) {
+    for (const player of this.players) {
+      player.setAlive(alive)
     }
   }
 
   addPlayer (member, color) {
     const player = new Player(member, color)
     this.players.push(player)
+    console.log(`${member.user.tag} (${member.user.id}) joined ${this.syncId} as ${color} in ${this.voiceChannel.guild.name} (${this.voiceChannel.guild.id}) / ${this.voiceChannel.name} (${this.voiceChannel.id})`)
+    this.sendStateUpdate()
     this.updatePlayerMute(player)
     return player
   }
@@ -30,6 +61,8 @@ class Game {
   removePlayer (member) {
     const player = this.getPlayer(member)
     this.players.splice(this.players.indexOf(player), 1)
+    console.log(`${member.user.tag} (${member.user.id}) left ${this.syncId} in ${this.voiceChannel.guild.name} (${this.voiceChannel.guild.id}) / ${this.voiceChannel.name} (${this.voiceChannel.id})`)
+    this.sendStateUpdate()
     this.updatePlayerMute(player)
     if (this.players.length === 0) {
       this.textChannel.send(`The game in **${this.voiceChannel.name}** has ended because there were no players left.`)
@@ -48,6 +81,7 @@ class Game {
   setPlayerAlive (member, alive) {
     const player = this.getPlayer(member)
     player.setAlive(alive)
+    this.sendStateUpdate()
     this.updatePlayerMute(player)
   }
 
