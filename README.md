@@ -27,9 +27,15 @@
 
 ###### **\*** aliases have not been implemented yet.
 
-## Screenshots
+## Support server
 
-TODO
+If you encounter any problems with the bot or have questions, don't hesitate to join our Discord server!
+
+<div align="center">
+  <a href="https://discord.gg/ENcM67N">
+    <img src="https://invidget.switchblade.xyz/ENcM67N"></img>
+  </a>
+</div>
 
 ## Self-hosting
 
