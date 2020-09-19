@@ -21,7 +21,7 @@ module.exports = class Join extends Command {
   run ({ message, game }) {
     const color = message.content.split(' ')[1]
     const player = game.getPlayerByColor(color)
+    message.channel.send(`**${player.member.user.tag}** has been kicked from the game.`)
     game.removePlayer(player.member)
-    return message.channel.send(`**${player.member.user.tag}** has been kicked from the game.`)
   }
 }
