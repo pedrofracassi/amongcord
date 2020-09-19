@@ -11,6 +11,8 @@ const GameParticipationRequirement = require('./GameParticipationRequirement')
 const PlayerColors = require('./PlayerColors')
 const Utils = require('./Utils')
 
+const permissionStrings = require('./strings/permissions.json')
+
 let commands = []
 let emojis = new Map()
 
@@ -85,13 +87,21 @@ client.on('message', message => {
   if ([`<@!${client.user.id}>`, `<@${client.user.id}>`].includes(message.content)) return message.channel.send(`**Hi, I\'m Amongcord!** For help, type \`${prefix}help\`.`)
 
   commands.forEach(command => {
-    if (message.content.startsWith(`${prefix}${command.name}`)) {
+    const commandText = `${prefix}${command.name}`
+    if (message.content === commandText || message.content.startsWith(`${commandText} `)) {
       console.log(`[${message.guild.name}] #${message.channel.name} <${message.author.tag}> ${message.content}`)
 
       const game = gameManager.getGame(message.member.voice.channel)
 
       if (command.voiceChannelOnly) {
         if (!message.member.voice.channel) return message.channel.send('Join a voice channel.')
+      }
+
+      if (command.voicePermissionRequirement.length > 0) {
+        for (const index in command.voicePermissionRequirement) {
+          const permission = command.voicePermissionRequirement[index]
+          if (!message.member.voice.channel.permissionsFor(message.member).has(permission)) return message.channel.send(`You need the **${permissionStrings[permission]}** permission to do that.`)
+        }
       }
 
       switch (command.gameExistenceRequirement) {

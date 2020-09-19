@@ -10,6 +10,7 @@ class Command {
     this.voiceChannelOnly = settings.voiceChannelOnly || false
     this.gameExistenceRequirement = settings.gameExistenceRequirement || null
     this.gameParticipationRequirement = settings.gameParticipationRequirement || null
+    this.voicePermissionRequirement = settings.voicePermissionRequirement || []
     this.colorRequirement = settings.colorRequirement || null
   }
 

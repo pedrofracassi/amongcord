@@ -78,6 +78,10 @@ class Game {
     return this.players.find(p => p.color === color)
   }
 
+  getPlayers() {
+    return this.players
+  }
+  
   setPlayerAlive (member, alive) {
     const player = this.getPlayer(member)
     player.setAlive(alive)
