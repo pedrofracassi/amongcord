@@ -23,6 +23,7 @@
 | `,lobby` | `,lb` | Sets the stage to Lobby, marks everyone as alive and unmutes them |
 | `,newgame` | `,ng` | Starts a new game |
 | `,players` | `,p` | Lists all players in the current game |
+| `,sync` |  | Lets you control the bot through your phone |
 | `,tasks` | `,ts` | Sets the stage to tasks and mutes everyone |
 
 ###### **\*** aliases have not been implemented yet.
