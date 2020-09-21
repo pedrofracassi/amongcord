@@ -95,6 +95,8 @@ client.on('message', message => {
 
       const game = gameManager.getGame(message.member.voice.channel)
 
+      const target = message.mentions.members.first()
+
       if (command.voiceChannelOnly) {
         if (!message.member.voice.channel) return message.channel.send('Join a voice channel.')
       }
@@ -105,6 +107,8 @@ client.on('message', message => {
           if (!message.member.voice.channel.permissionsFor(message.member).has(permission)) return message.channel.send(`You need the **${permissionStrings[permission]}** permission to do that.`)
         }
       }
+
+      if (command.requiresTarget && !target) return message.channel.send('You need to mention someone.')
 
       switch (command.gameExistenceRequirement) {
         case GameExistenceRequirement.GAME:
@@ -117,11 +121,22 @@ client.on('message', message => {
 
       switch (command.gameParticipationRequirement) {
         case GameParticipationRequirement.PARTICIPATING:
-          if (!game.getPlayer(message.member)) return message.channel.send(`**You're not in this game.** Type \`${prefix}join\` to join it.`)
+          if (!game.getPlayer(message.member)) message.channel.send(`**You're not in this game.** Type \`${prefix}join\` to join it.`)
           break
         case GameParticipationRequirement.NOT_PARTICIPATING:
-          if (game && !!game.getPlayer(message.member)) return message.channel.send(`**You\'re already in this game.** Type \`${prefix}leave\` to leave it.`)
+          if (game && !!game.getPlayer(message.member)) message.channel.send(`**You're already in this game.** Type \`${prefix}leave\` to leave it.`)
           break
+      }
+
+      if (target) {
+        switch (command.targetGameParticipationRequirement) {
+          case GameParticipationRequirement.PARTICIPATING:
+            if (!game.getPlayer(target)) return message.channel.send(`**${target.user.tag} is not in this game.** Type \`${prefix}forcejoin\` to add them to it.`)
+            break
+          case GameParticipationRequirement.NOT_PARTICIPATING:
+            if (game && !!game.getPlayer(target)) return message.channel.send(`**${target.user.tag} is already in this game.** Type \`${prefix}kick ${game.getPlayer(target).color}\` to kick them from it.`)
+            break
+        }
       }
 
       if (command.colorRequirement !== null) {
@@ -159,7 +174,8 @@ client.on('message', message => {
         voiceChannel: message.member.voice.channel,
         commands,
         client,
-        emojis
+        emojis,
+        target
       })
     }
   })
