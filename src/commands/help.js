@@ -27,7 +27,8 @@ module.exports = class Commands extends Command {
             '[Twitter](https://twitter.com/plfracassi_)',
             '[Patreon](https://patreon.com/pedrofracassi)',
             '[Discord](https://discord.gg/ENcM67N)',
-            `${client.guilds.cache.size.toLocaleString()} servers`
+            `**${client.guilds.cache.size.toLocaleString()} servers**`,
+            `Shard ${message.guild.shardID}`
           ].join(' | '),
         ])
     )

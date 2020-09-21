@@ -1,5 +1,7 @@
 const Discord = require('discord.js')
-const client = new Discord.Client()
+const client = new Discord.Client({
+  shards: 'auto'
+})
 
 const glob = require('glob')
 const path = require('path')
