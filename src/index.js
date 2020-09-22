@@ -41,6 +41,7 @@ let gameManager = new GameManager(io)
 
 io.on('connection', socket => {
   socket.on('join', id => {
+    Sentry.setTag('sync_event', 'join')
     console.log('Sync client trying to join', id)
     if (gameManager.hasGameBySyncId(id)) {
       socket.join(id)
@@ -54,6 +55,7 @@ io.on('connection', socket => {
   })
 
   socket.on('setStage', data => {
+    Sentry.setTag('sync_event', 'setStage')
     const { sync_id, game_stage } = JSON.parse(data)
     const game = gameManager.getGameBySyncId(sync_id)
     console.log(`Client set the stage to ${game_stage} in game ${game.syncId} at ${Utils.getGameLogString(game)}`)
@@ -61,6 +63,7 @@ io.on('connection', socket => {
   })
 
   socket.on('setAlive', data => {
+    Sentry.setTag('sync_event', 'setAlive')
     const { sync_id, color, alive } = JSON.parse(data)
     const game = gameManager.getGameBySyncId(sync_id)
     console.log(`Client set ${color} to ${alive? 'alive' : 'dead'} in game ${game.syncId} at ${Utils.getGameLogString(game)}`)
@@ -75,6 +78,7 @@ glob.sync('./src/commands/**/*.js').forEach(file => {
 })
 
 client.on('ready', () => {
+  Sentry.setTag('discord_event', 'ready')
   console.log(`Logged in as ${client.user.tag}!`)
   if (process.env.GUILD_ID) client.guilds.cache.get(process.env.GUILD_ID).emojis.cache.each(e => {
     console.log(`Loaded ${e}`)
@@ -83,10 +87,12 @@ client.on('ready', () => {
 })
 
 client.on('ratelimit', ratelimitInfo => {
+  Sentry.setTag('discord_event', 'ratelimit')
   console.log(ratelimitInfo)
 })
 
 client.on('voiceStateUpdate', (oldState, newState) => {
+  Sentry.setTag('discord_event', 'voiceStateUpdate')
   if (oldState.channelID !== newState.channelID && gameManager.hasGame(oldState.channel)) {
     const game = gameManager.getGame(oldState.channel)
     if (game.getPlayer(oldState.member)) {
@@ -97,6 +103,7 @@ client.on('voiceStateUpdate', (oldState, newState) => {
 })
 
 client.on('message', message => {
+  Sentry.setTag('discord_event', 'message')
   if (message.author.id === client.user.id) return
   if (message.channel.type !== 'text') return
   if (message.author.bot) return
@@ -113,6 +120,12 @@ client.on('message', message => {
 
   const command = commands.find(c => c.name === invokedCommand || c.aliases.includes(invokedCommand))
   if (!command) return
+
+  Sentry.setTag('command', command.name)
+
+  Sentry.setContext('Command Execution', {
+    'Message': message.content
+  })
 
   console.log(`[${message.guild.name}] #${message.channel.name} <${message.author.tag}> ${message.content}`)
 
