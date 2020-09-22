@@ -1,6 +1,5 @@
 const Command = require('../Command')
 
-
 module.exports = class CommandsMD extends Command {
   constructor () {
     super({

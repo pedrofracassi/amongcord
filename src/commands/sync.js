@@ -9,6 +9,7 @@ module.exports = class Sync extends Command {
   constructor () {
     super({
       name: 'sync',
+      aliases: [ 's' ],
       description: 'Lets you control the bot through your phone',
       new: true,
 

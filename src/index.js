@@ -1,8 +1,3 @@
-const Discord = require('discord.js')
-const client = new Discord.Client({
-  shards: 'auto'
-})
-
 const glob = require('glob')
 const path = require('path')
 
@@ -19,6 +14,18 @@ let commands = []
 let emojis = new Map()
 
 const prefix = process.env.PREFIX || ','
+
+const Discord = require('discord.js')
+const client = new Discord.Client({
+  shards: 'auto',
+  messageCacheMaxSize: 1,
+  presence: {
+    activity: {
+      name: `${prefix}help`,
+      type: 'PLAYING'
+    }
+  }
+})
 
 const io = require('socket.io')(process.env.PORT || 80)
 
@@ -88,96 +95,102 @@ client.on('message', message => {
 
   if ([`<@!${client.user.id}>`, `<@${client.user.id}>`].includes(message.content)) return message.channel.send(`**Hi, I\'m Amongcord!** For help, type \`${prefix}help\`.`)
 
-  commands.forEach(command => {
-    const commandText = `${prefix}${command.name}`
-    if (message.content === commandText || message.content.startsWith(`${commandText} `)) {
-      console.log(`[${message.guild.name}] #${message.channel.name} <${message.author.tag}> ${message.content}`)
+  const safePrefix = prefix.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+  const commandExpression = new RegExp(`^${safePrefix}([a-z]*) ?`)
+  
+  const commandMatch = commandExpression.exec(message.content)
+  if (!commandMatch) return
 
-      const game = gameManager.getGame(message.member.voice.channel)
+  const invokedCommand = commandMatch[1]
 
-      const target = message.mentions.members.first()
+  const command = commands.find(c => c.name === invokedCommand || c.aliases.includes(invokedCommand))
+  if (!command) return
 
-      if (command.voiceChannelOnly) {
-        if (!message.member.voice.channel) return message.channel.send('Join a voice channel.')
-      }
+  console.log(`[${message.guild.name}] #${message.channel.name} <${message.author.tag}> ${message.content}`)
 
-      if (command.voicePermissionRequirement.length > 0) {
-        for (const index in command.voicePermissionRequirement) {
-          const permission = command.voicePermissionRequirement[index]
-          if (!message.member.voice.channel.permissionsFor(message.member).has(permission)) return message.channel.send(`You need the **${permissionStrings[permission]}** permission to do that.`)
-        }
-      }
+  const game = gameManager.getGame(message.member.voice.channel)
 
-      if (command.requiresTarget && !target) return message.channel.send('You need to mention someone.')
+  const target = message.mentions.members.first()
 
-      switch (command.gameExistenceRequirement) {
-        case GameExistenceRequirement.GAME:
-          if (!gameManager.hasGame(message.member.voice.channel)) return message.channel.send(`There's no game in the channel you're in. Type \`${prefix}newgame\` to start one.`)
-          break
-        case GameExistenceRequirement.NO_GAME:
-          if (gameManager.hasGame(message.member.voice.channel)) return message.channel.send(`There's already a game in the channel you're in. Type \`${prefix}endgame\` to end it.`)
-          break
-      }
+  if (command.voiceChannelOnly) {
+    if (!message.member.voice.channel) return message.channel.send('Join a voice channel.')
+  }
 
-      switch (command.gameParticipationRequirement) {
-        case GameParticipationRequirement.PARTICIPATING:
-          if (!game.getPlayer(message.member)) return message.channel.send(`**You're not in this game.** Type \`${prefix}join\` to join it.`)
-          break
-        case GameParticipationRequirement.NOT_PARTICIPATING:
-          if (game && !!game.getPlayer(message.member)) return message.channel.send(`**You're already in this game.** Type \`${prefix}leave\` to leave it.`)
-          break
-      }
-
-      if (target) {
-        switch (command.targetGameParticipationRequirement) {
-          case GameParticipationRequirement.PARTICIPATING:
-            if (!game.getPlayer(target)) return message.channel.send(`**${target.user.tag} is not in this game.** Type \`${prefix}forcejoin\` to add them to it.`)
-            break
-          case GameParticipationRequirement.NOT_PARTICIPATING:
-            if (game && !!game.getPlayer(target)) return message.channel.send(`**${target.user.tag} is already in this game.** Type \`${prefix}kick ${game.getPlayer(target).color}\` to kick them from it.`)
-            break
-        }
-      }
-
-      if (command.colorRequirement !== null) {
-        const colors = Object.values(PlayerColors)
-        const colorArgument = message.content.split(' ')[1]
-        const suggestions = Utils.getFormattedList(Utils.getColorSuggestions(command.colorRequirement))
-        if (!colorArgument) return message.channel.send(`**You need to give me a color.** Try one of these: ${suggestions}`)
-        const color = colorArgument.toLowerCase()
-        if (!colors.includes(color)) return message.channel.send(`**Invalid color.** Try one of these: ${suggestions}`)
-
-        if ([ColorRequirement.ALIVE, ColorRequirement.DEAD, ColorRequirement.OCCUPIED].includes(command.colorRequirement)) {
-          if (!game.isColorOccupied(color)) return message.channel.send(`**There's no player with the color \`${color}\`.** Try one of these: ${suggestions}`)
-        }
-
-        if (command.colorRequirement === ColorRequirement.AVAILABLE) {
-          if (!game.isColorAvailable(color)) return message.channel.send(`**There's already a player with the color \`${color}\`.** Try one of these: ${suggestions}`)
-        }
-
-        if (command.colorRequirement === ColorRequirement.ALIVE) {
-          const player = game.getPlayerByColor(color)
-          if (!player.alive) return message.channel.send(`**${player.member.user.tag} (${color}) is not alive.** Try one of these: ${suggestions}`)
-        }
-
-        if (command.colorRequirement === ColorRequirement.DEAD) {
-          const player = game.getPlayerByColor(color)
-          if (player.alive) return message.channel.send(`**${player.member.user.tag} (${color}) is not dead.** Try one of these: ${suggestions}`)
-        }
-      }
-
-      command.run({
-        message,
-        gameManager,
-        game,
-        prefix,
-        voiceChannel: message.member.voice.channel,
-        commands,
-        client,
-        emojis,
-        target
-      })
+  if (command.voicePermissionRequirement.length > 0) {
+    for (const index in command.voicePermissionRequirement) {
+      const permission = command.voicePermissionRequirement[index]
+      if (!message.member.voice.channel.permissionsFor(message.member).has(permission)) return message.channel.send(`You need the **${permissionStrings[permission]}** permission to do that.`)
     }
+  }
+
+  if (command.requiresTarget && !target) return message.channel.send('You need to mention someone.')
+
+  switch (command.gameExistenceRequirement) {
+    case GameExistenceRequirement.GAME:
+      if (!gameManager.hasGame(message.member.voice.channel)) return message.channel.send(`There's no game in the channel you're in. Type \`${prefix}newgame\` to start one.`)
+      break
+    case GameExistenceRequirement.NO_GAME:
+      if (gameManager.hasGame(message.member.voice.channel)) return message.channel.send(`There's already a game in the channel you're in. Type \`${prefix}endgame\` to end it.`)
+      break
+  }
+
+  switch (command.gameParticipationRequirement) {
+    case GameParticipationRequirement.PARTICIPATING:
+      if (!game.getPlayer(message.member)) return message.channel.send(`**You're not in this game.** Type \`${prefix}join\` to join it.`)
+      break
+    case GameParticipationRequirement.NOT_PARTICIPATING:
+      if (game && !!game.getPlayer(message.member)) return message.channel.send(`**You're already in this game.** Type \`${prefix}leave\` to leave it.`)
+      break
+  }
+
+  if (target) {
+    switch (command.targetGameParticipationRequirement) {
+      case GameParticipationRequirement.PARTICIPATING:
+        if (!game.getPlayer(target)) return message.channel.send(`**${target.user.tag} is not in this game.** Type \`${prefix}forcejoin\` to add them to it.`)
+        break
+      case GameParticipationRequirement.NOT_PARTICIPATING:
+        if (game && !!game.getPlayer(target)) return message.channel.send(`**${target.user.tag} is already in this game.** Type \`${prefix}kick ${game.getPlayer(target).color}\` to kick them from it.`)
+        break
+    }
+  }
+
+  if (command.colorRequirement !== null) {
+    const colors = Object.values(PlayerColors)
+    const colorArgument = message.content.split(' ')[1]
+    const suggestions = Utils.getFormattedList(Utils.getColorSuggestions(command.colorRequirement))
+    if (!colorArgument) return message.channel.send(`**You need to give me a color.** Try one of these: ${suggestions}`)
+    const color = colorArgument.toLowerCase()
+    if (!colors.includes(color)) return message.channel.send(`**Invalid color.** Try one of these: ${suggestions}`)
+
+    if ([ColorRequirement.ALIVE, ColorRequirement.DEAD, ColorRequirement.OCCUPIED].includes(command.colorRequirement)) {
+      if (!game.isColorOccupied(color)) return message.channel.send(`**There's no player with the color \`${color}\`.** Try one of these: ${suggestions}`)
+    }
+
+    if (command.colorRequirement === ColorRequirement.AVAILABLE) {
+      if (!game.isColorAvailable(color)) return message.channel.send(`**There's already a player with the color \`${color}\`.** Try one of these: ${suggestions}`)
+    }
+
+    if (command.colorRequirement === ColorRequirement.ALIVE) {
+      const player = game.getPlayerByColor(color)
+      if (!player.alive) return message.channel.send(`**${player.member.user.tag} (${color}) is not alive.** Try one of these: ${suggestions}`)
+    }
+
+    if (command.colorRequirement === ColorRequirement.DEAD) {
+      const player = game.getPlayerByColor(color)
+      if (player.alive) return message.channel.send(`**${player.member.user.tag} (${color}) is not dead.** Try one of these: ${suggestions}`)
+    }
+  }
+
+  command.run({
+    message,
+    gameManager,
+    game,
+    prefix,
+    voiceChannel: message.member.voice.channel,
+    commands,
+    client,
+    emojis,
+    target
   })
 })
 
