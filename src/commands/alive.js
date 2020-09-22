@@ -5,10 +5,10 @@ const ColorRequirement = require('../ColorRequirement')
 const GameExistenceRequirement = require('../GameExistenceRequirement')
 
 module.exports = class Alive extends Command {
-  constructor () {
+  constructor() {
     super({
       name: 'alive',
-      aliases: [ 'a' ],
+      aliases: ['a'],
       usage: '<color>',
       description: 'Marks a player as alive',
 
@@ -18,7 +18,8 @@ module.exports = class Alive extends Command {
     })
   }
 
-  run ({ message, game, emojis }) {
+  run({ message, game, emojis }) {
+    if (!Utils.muteUsersPermCheck(message.author)) return message.reply(`Make sure you have the proper permissions to do this!`)
     const color = message.content.split(' ')[1].toLowerCase()
     const player = game.getPlayerByColor(color)
     game.setPlayerAlive(player.member, true)

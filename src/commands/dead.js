@@ -5,10 +5,10 @@ const ColorRequirement = require('../ColorRequirement')
 const GameExistenceRequirement = require('../GameExistenceRequirement')
 
 module.exports = class NewGame extends Command {
-  constructor () {
+  constructor() {
     super({
       name: 'dead',
-      aliases: [ 'd' ],
+      aliases: ['d'],
       usage: '<color>',
       description: ' Marks a player as dead. Dead players are kept muted during the discussion stage.',
 
@@ -18,7 +18,8 @@ module.exports = class NewGame extends Command {
     })
   }
 
-  run ({ message, game, emojis }) {
+  run({ message, game, emojis }) {
+    if (!Utils.muteUsersPermCheck(message.author)) return message.reply(`Make sure you have the proper permissions to do this!`)
     const color = message.content.split(' ')[1].toLowerCase()
     const player = game.getPlayerByColor(color)
     game.setPlayerAlive(player.member, false)

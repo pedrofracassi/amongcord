@@ -5,10 +5,10 @@ const GameExistenceRequirement = require('../GameExistenceRequirement')
 const GameParticipationRequirement = require('../GameParticipationRequirement')
 
 module.exports = class Lobby extends Command {
-  constructor () {
+  constructor() {
     super({
       name: 'lobby',
-      aliases: [ 'lb' ],
+      aliases: ['lb'],
       description: 'Sets the stage to Lobby, marks everyone as alive and unmutes them',
 
       gameExistenceRequirement: GameExistenceRequirement.GAME,
@@ -17,7 +17,8 @@ module.exports = class Lobby extends Command {
     })
   }
 
-  run ({ message, game }) {
+  run({ message, game }) {
+    if (!Utils.muteUsersPermCheck(message.author)) return message.reply(`Make sure you have the proper permissions to do this!`)
     game.setStage(GameStages.LOBBY)
     message.channel.send({
       content: 'Stage set to **lobby**. Thanks for playing!',
