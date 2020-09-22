@@ -121,10 +121,10 @@ client.on('message', message => {
 
       switch (command.gameParticipationRequirement) {
         case GameParticipationRequirement.PARTICIPATING:
-          if (!game.getPlayer(message.member)) message.channel.send(`**You're not in this game.** Type \`${prefix}join\` to join it.`)
+          if (!game.getPlayer(message.member)) return message.channel.send(`**You're not in this game.** Type \`${prefix}join\` to join it.`)
           break
         case GameParticipationRequirement.NOT_PARTICIPATING:
-          if (game && !!game.getPlayer(message.member)) message.channel.send(`**You're already in this game.** Type \`${prefix}leave\` to leave it.`)
+          if (game && !!game.getPlayer(message.member)) return message.channel.send(`**You're already in this game.** Type \`${prefix}leave\` to leave it.`)
           break
       }
 
