@@ -119,16 +119,25 @@ class Game {
     switch (this.gameStage) {
       case GameStages.LOBBY: 
         await player.member.voice.setMute(false)
+        await player.member.voice.setDeaf(false)
         break
       case GameStages.DISCUSSION:
         if (player.alive) {
           await player.member.voice.setMute(false)
+          await player.member.voice.setDeaf(false)
         } else {
           await player.member.voice.setMute(true)
+          await player.member.voice.setDeaf(false)
         }
         break
       case GameStages.TASKS:
-        await player.member.voice.setMute(true)
+        if (player.alive) {
+          await player.member.voice.setMute(true)
+          await player.member.voice.setDeaf(true)
+        } else {
+          await player.member.voice.setMute(false)
+          await player.member.voice.setDeaf(false)
+        }
         break
     }
   }
