@@ -13,6 +13,7 @@ module.exports = class Join extends Command {
       usage: '<color> <@mention>',
       description: 'Forcibly adds someone to the current game',
 
+      voiceChannelOnly: true,
       gameExistenceRequirement: GameExistenceRequirement.GAME,
       targetGameParticipationRequirement: GameParticipationRequirement.NOT_PARTICIPATING,
       colorRequirement: ColorRequirement.AVAILABLE,
