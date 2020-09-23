@@ -38,7 +38,12 @@ class Game {
     
     this.sendStateUpdate()
     
-    for (const player of this.players) {
+    const sortedPlayers = [...this.players].sort((a, b) => {
+      if (stage === GameStages.DISCUSSION || stage === GameStages.LOBBY) return a - b
+      if (stage === GameStages.TASKS) return a - b
+    })
+
+    for (const player of sortedPlayers) {
       await this.updatePlayerMute(player)
     }
   }
@@ -113,30 +118,45 @@ class Game {
     return this.players.filter(p => !!p.alive).map(p => p.color)
   }
 
-  async updatePlayerMute (player) {
+  updatePlayerMute (player) {
     if (player.member.user.bot) return
-    if (!this.players.includes(player)) return player.member.voice.setMute(false)
+    if (!this.players.includes(player)) {
+      return player.member.edit({
+        deaf: false,
+        mute: false
+      })
+    } 
     switch (this.gameStage) {
       case GameStages.LOBBY: 
-        await player.member.voice.setMute(false)
-        await player.member.voice.setDeaf(false)
+        return player.member.edit({
+          deaf: false,
+          mute: false
+        })
         break
       case GameStages.DISCUSSION:
         if (player.alive) {
-          await player.member.voice.setMute(false)
-          await player.member.voice.setDeaf(false)
+          return player.member.edit({
+            deaf: false,
+            mute: false
+          })
         } else {
-          await player.member.voice.setMute(true)
-          await player.member.voice.setDeaf(false)
+          return player.member.edit({
+            deaf: false,
+            mute: true
+          })
         }
         break
       case GameStages.TASKS:
         if (player.alive) {
-          await player.member.voice.setMute(true)
-          await player.member.voice.setDeaf(true)
+          return player.member.edit({
+            deaf: true,
+            mute: true
+          })
         } else {
-          await player.member.voice.setMute(false)
-          await player.member.voice.setDeaf(false)
+          return player.member.edit({
+            deaf: false,
+            mute: false
+          })
         }
         break
     }
