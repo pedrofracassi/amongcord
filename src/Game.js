@@ -2,6 +2,11 @@ const GameStages = require('./GameStages')
 const Player = require('./Player')
 const PlayerColors = require('./PlayerColors')
 const Utils = require('./Utils')
+const PlayerVoiceStates = require('./PlayerVoiceStates')
+
+const voiceStatesNoDeafen = {
+
+}
 
 class Game {
   constructor (voiceChannel, textChannel, manager) {
@@ -121,46 +126,8 @@ class Game {
 
   updatePlayerMute (player) {
     if (player.member.user.bot) return
-    if (!this.players.includes(player)) {
-      return Utils.editMember(player.member, {
-        deaf: false,
-        mute: false
-      })
-    } 
-    switch (this.gameStage) {
-      case GameStages.LOBBY: 
-        return Utils.editMember(player.member, {
-          deaf: false,
-          mute: false
-        })
-        break
-      case GameStages.DISCUSSION:
-        if (player.alive) {
-          return Utils.editMember(player.member, {
-            deaf: false,
-            mute: false
-          })
-        } else {
-          return Utils.editMember(player.member, {
-            deaf: false,
-            mute: true
-          })
-        }
-        break
-      case GameStages.TASKS:
-        if (player.alive) {
-          return Utils.editMember(player.member, {
-            deaf: true,
-            mute: true
-          })
-        } else {
-          return Utils.editMember(player.member, {
-            deaf: false,
-            mute: false
-          })
-        }
-        break
-    }
+    const states = new PlayerVoiceStates(player.member.guild.me, this.voiceChannel, player, this)
+    Utils.editMember(player.member, states.getVoiceState(this.gameStage))
   }
 }
 
