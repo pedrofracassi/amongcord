@@ -37,4 +37,14 @@ module.exports = class Utils {
   static getGameLogString (game) {
     return `${game.voiceChannel.guild.name} (${game.voiceChannel.guild.id}) / ${game.voiceChannel.name} (${game.voiceChannel.id})`
   }
+
+  static editMember (member, newState) {
+    if (!member.voice) return
+    const currentState = {
+      deaf: member.voice.serverDeaf,
+      mute: member.voice.serverMute
+    }
+    if (newState.deaf === currentState.deaf && newState.mute === currentState.deaf) return
+    member.edit(newState)
+  }
 }

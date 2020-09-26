@@ -1,6 +1,7 @@
 const GameStages = require('./GameStages')
 const Player = require('./Player')
 const PlayerColors = require('./PlayerColors')
+const Utils = require('./Utils')
 
 class Game {
   constructor (voiceChannel, textChannel, manager) {
@@ -39,8 +40,8 @@ class Game {
     this.sendStateUpdate()
     
     const sortedPlayers = [...this.players].sort((a, b) => {
-      if (stage === GameStages.DISCUSSION || stage === GameStages.LOBBY) return a - b
-      if (stage === GameStages.TASKS) return a - b
+      if (stage === GameStages.DISCUSSION || stage === GameStages.LOBBY) return a.alive - b.alive
+      if (stage === GameStages.TASKS) return b.alive - a.alive
     })
 
     for (const player of sortedPlayers) {
@@ -121,26 +122,26 @@ class Game {
   updatePlayerMute (player) {
     if (player.member.user.bot) return
     if (!this.players.includes(player)) {
-      return player.member.edit({
+      return Utils.editMember(player.member, {
         deaf: false,
         mute: false
       })
     } 
     switch (this.gameStage) {
       case GameStages.LOBBY: 
-        return player.member.edit({
+        return Utils.editMember(player.member, {
           deaf: false,
           mute: false
         })
         break
       case GameStages.DISCUSSION:
         if (player.alive) {
-          return player.member.edit({
+          return Utils.editMember(player.member, {
             deaf: false,
             mute: false
           })
         } else {
-          return player.member.edit({
+          return Utils.editMember(player.member, {
             deaf: false,
             mute: true
           })
@@ -148,12 +149,12 @@ class Game {
         break
       case GameStages.TASKS:
         if (player.alive) {
-          return player.member.edit({
+          return Utils.editMember(player.member, {
             deaf: true,
             mute: true
           })
         } else {
-          return player.member.edit({
+          return Utils.editMember(player.member, {
             deaf: false,
             mute: false
           })
