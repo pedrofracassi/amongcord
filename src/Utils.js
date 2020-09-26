@@ -44,7 +44,7 @@ module.exports = class Utils {
       deaf: member.voice.serverDeaf,
       mute: member.voice.serverMute
     }
-    if (newState.deaf === currentState.deaf && newState.mute === currentState.deaf) return
+    if (newState.deaf === currentState.deaf && newState.mute === currentState.mute) return
     member.edit(newState)
   }
 }
