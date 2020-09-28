@@ -14,14 +14,21 @@ module.exports = class Alive extends Command {
 
       gameExistenceRequirement: GameExistenceRequirement.GAME,
       voiceChannelOnly: true,
-      colorRequirement: ColorRequirement.DEAD
+      colorRequirement: ColorRequirement.DEAD,
+      isColorOptional: true,
     })
   }
 
   run ({ message, game, emojis }) {
-    const color = message.content.split(' ')[1].toLowerCase()
-    const player = game.getPlayerByColor(color)
+    const player = this.getPlayer(message, game);
     game.setPlayerAlive(player.member, true)
     return message.channel.send(`**${player.member.user.tag}** (${player.color}) has been marked as alive.  ${Utils.getPlayerEmoji(player, emojis)}`)
+  }
+
+  getPlayer (message, game) {
+    const color = message.content.split(' ')[1]
+    if(color == undefined && this.isColorOptional) 
+      return game.getPlayer(message.member)
+    return game.getPlayerByColor(color.toLowerCase())
   }
 }

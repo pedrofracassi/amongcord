@@ -14,6 +14,7 @@ class Command {
     this.requiresTarget = settings.requiresTarget || false
     this.voicePermissionRequirement = settings.voicePermissionRequirement || []
     this.colorRequirement = settings.colorRequirement || null
+    this.isColorOptional = settings.isColorOptional || false;
   }
 
   run ({ message }) {
