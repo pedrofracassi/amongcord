@@ -24,6 +24,7 @@ let emojis = new Map()
 const prefix = process.env.PREFIX || ','
 
 const Discord = require('discord.js')
+const HostExistenceRequirement = require("./HostExistenceRequirement")
 const client = new Discord.Client({
   shards: 'auto',
   messageCacheMaxSize: 1,
@@ -162,6 +163,19 @@ client.on('message', message => {
     case GameParticipationRequirement.NOT_PARTICIPATING:
       if (game && !!game.getPlayer(message.member)) return message.channel.send(`**You're already in this game.** Type \`${prefix}leave\` to leave it.`)
       break
+  }
+
+  switch (command.hostExistenceRequirement) {
+    case HostExistenceRequirement.HOST:
+      if (!game.hasHost()) return message.channel.send('There\'s not a host in this game.')
+      break
+    case HostExistenceRequirement.NO_HOST:
+      if (game.hasHost()) return message.channel.send('There\'s already a host in this game.')
+      break
+  }
+
+  if (command.hostOnly && game.hasHost()) {
+    if (!game.getPlayer(message.member).host) return message.channel.send('You\'re not the game host.')
   }
 
   if (target) {

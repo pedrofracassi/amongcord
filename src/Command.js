@@ -14,6 +14,8 @@ class Command {
     this.requiresTarget = settings.requiresTarget || false
     this.voicePermissionRequirement = settings.voicePermissionRequirement || []
     this.colorRequirement = settings.colorRequirement || null
+    this.hostOnly = settings.hostOnly || false
+    this.hostExistenceRequirement = settings.hostExistenceRequirement || null
   }
 
   run ({ message }) {

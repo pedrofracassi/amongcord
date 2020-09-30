@@ -14,7 +14,8 @@ module.exports = class Join extends Command {
       description: 'Removes a player from the game',
 
       gameExistenceRequirement: GameExistenceRequirement.GAME,
-      colorRequirement: ColorRequirement.OCCUPIED
+      colorRequirement: ColorRequirement.OCCUPIED,
+      hostOnly: true
     })
   }
 
