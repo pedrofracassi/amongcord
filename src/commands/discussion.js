@@ -9,7 +9,7 @@ module.exports = class Discussion extends Command {
     super({
       name: 'discussion',
       aliases: [ 'ds' ],
-      description: 'Sets the stage to discussion, umnutes everyone who is alive',
+      description: 'Sets the stage to discussion, unmutes everyone who is alive',
 
       gameExistenceRequirement: GameExistenceRequirement.GAME,
       gameParticipationRequirement: GameParticipationRequirement.PARTICIPATING,
