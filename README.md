@@ -13,7 +13,7 @@
 | `,add` | `,invite` | Shows the bot's invite link |
 | `,alive <color>` | `,a` | Marks a player as alive |
 | `,dead <color>` | `,d` |  Marks a player as dead. Dead players are kept muted during the discussion stage. |
-| `,discussion` | `,ds` | Sets the stage to discussion, umnutes everyone who is alive |
+| `,discussion` | `,ds` | Sets the stage to discussion, unmutes everyone who is alive |
 | `,endgame` | `,eg` | Ends the current game |
 | `,forcejoin <color> <@mention>` | `,fj` | Forcibly adds someone to the current game |
 | `,github` | `,gh` | Links to the bot's GitHub page |
