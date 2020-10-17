@@ -100,6 +100,12 @@ class Game {
     this.updatePlayerMute(player)
   }
 
+  setPlayerColor (member, color) {
+    const player = this.getPlayer(member)
+    player.setColor(color)
+    this.sendStateUpdate()
+  }
+
   isColorOccupied (color) {
     return !!this.getPlayerByColor(color.toLowerCase())
   }
