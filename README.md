@@ -25,6 +25,7 @@
 | `,lobby` | `,lb` | Sets the stage to Lobby, marks everyone as alive and unmutes them |
 | `,newgame` | `,ng` | Starts a new game |
 | `,players` | `,p` | Lists all players in the current game |
+| `,setcolor` | `,sc`, `,changecolor`, `,cc` | Set the color of a player in your game |
 | `,sync` |  | Lets you control the bot through your phone |
 | `,tasks` | `,ts` | Sets the stage to tasks and mutes everyone |
 
