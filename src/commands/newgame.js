@@ -16,6 +16,12 @@ module.exports = class NewGame extends Command {
 
   run ({ message, gameManager, voiceChannel, prefix }) {
     const game = gameManager.newGame(voiceChannel, message.channel)
-    message.channel.send(`Started a new game in **${voiceChannel.name}**! Type \`${prefix}sync\` to control it through your phone.`)
+    message.channel.send({
+      content: `Started a new game in **${voiceChannel.name}**! Type \`${prefix}sync\` to control it through your phone.`,
+      embed: {
+        description: `If you appreciate **Amongcord**, please consider [supporting the creator on Patreon](https://patreon.com/pedrofracassi) :)`,
+        color: 0xf96854
+      }
+    })
   }
 }
