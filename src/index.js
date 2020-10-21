@@ -179,8 +179,8 @@ client.on('message', message => {
     const colors = Object.values(PlayerColors)
     const colorArgument = message.content.split(' ')[1]
     const suggestions = Utils.getFormattedList(Utils.getColorSuggestions(command.colorRequirement))
-    if (!colorArgument) return message.channel.send(`**You need to give me a color.** Try one of these: ${suggestions}`)
-    const color = colorArgument.toLowerCase()
+    if (!colorArgument && !command.isColorOptional) return message.channel.send(`**You need to give me a color.** Try one of these: ${suggestions}`)
+    const color = colorArgument ? colorArgument.toLowerCase() : game.getPlayer(message.member).color;
     if (!colors.includes(color)) return message.channel.send(`**Invalid color.** Try one of these: ${suggestions}`)
 
     if ([ColorRequirement.ALIVE, ColorRequirement.DEAD, ColorRequirement.OCCUPIED].includes(command.colorRequirement)) {
