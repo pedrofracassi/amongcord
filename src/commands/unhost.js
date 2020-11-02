@@ -7,8 +7,8 @@ const PlayerColors = require('../PlayerColors')
 module.exports = class Unhost extends Command {
   constructor () {
     super({
-      name: 'host',
-      description: 'Sets you as the game host so only you can control the bot',
+      name: 'unhost',
+      description: 'Exits "host mode" and frees you from being the host',
 
       voiceChannelOnly: true,
       gameExistenceRequirement: GameExistenceRequirement.GAME,
