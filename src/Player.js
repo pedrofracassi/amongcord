@@ -5,6 +5,7 @@ class PlayerState {
     this.member = member
     this.color = color.toLowerCase()
     this.alive = true
+    this.host = false
   }
 
   setAlive (alive) {
@@ -14,6 +15,10 @@ class PlayerState {
   setColor (color) {
     if (!PlayerColors[color]) throw Error('Invalid player color')
     this.color = color.toLowerCase()
+  }
+
+  setHost (host) {
+    this.host = host
   }
 }
 

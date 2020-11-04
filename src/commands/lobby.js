@@ -13,7 +13,8 @@ module.exports = class Lobby extends Command {
 
       gameExistenceRequirement: GameExistenceRequirement.GAME,
       gameParticipationRequirement: GameParticipationRequirement.PARTICIPATING,
-      voiceChannelOnly: true
+      voiceChannelOnly: true,
+      hostOnly: true
     })
   }
 

@@ -9,7 +9,8 @@ module.exports = class EndGame extends Command {
       aliases: [ 'eg' ],
       description: 'Ends the current game',
 
-      gameExistenceRequirement: GameExistenceRequirement.GAME
+      gameExistenceRequirement: GameExistenceRequirement.GAME,
+      hostOnly: true
     })
   }
 

@@ -27,14 +27,24 @@ class Game {
         return {
           name: p.member.displayName,
           color: p.color,
-          alive: p.alive
+          alive: p.alive,
+          host: p.host
         }
       })
     }
   }
 
+  hasHost () {
+    return this.players.some(p => p.host)
+  }
+
   sendStateUpdate () {
     this.manager.io.to(this.syncId).emit('gameStateUpdate', this.toJSON())
+  }
+
+  refreshSyncId () {
+    this.manager.io.to(this.syncId).emit('gameEnded')
+    this.syncId = Math.random().toString(36).substring(2, 8).toUpperCase()
   }
 
   async setStage (stage) {
