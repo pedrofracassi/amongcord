@@ -12,7 +12,7 @@ class PlayerState {
   }
 
   setColor (color) {
-    if (!PlayerColors[color]) throw Error('Invalid player color')
+    if (!PlayerColors[color.toUpperCase()]) throw Error('Invalid player color')
     this.color = color.toLowerCase()
   }
 }
