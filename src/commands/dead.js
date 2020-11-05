@@ -14,7 +14,8 @@ module.exports = class NewGame extends Command {
 
       gameExistenceRequirement: GameExistenceRequirement.GAME,
       voiceChannelOnly: true,
-      colorRequirement: ColorRequirement.ALIVE
+      colorRequirement: ColorRequirement.ALIVE,
+      hostOnly: true
     })
   }
 

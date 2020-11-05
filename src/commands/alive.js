@@ -14,7 +14,8 @@ module.exports = class Alive extends Command {
 
       gameExistenceRequirement: GameExistenceRequirement.GAME,
       voiceChannelOnly: true,
-      colorRequirement: ColorRequirement.DEAD
+      colorRequirement: ColorRequirement.DEAD,
+      hostOnly: true
     })
   }
 
@@ -22,6 +23,6 @@ module.exports = class Alive extends Command {
     const color = message.content.split(' ')[1].toLowerCase()
     const player = game.getPlayerByColor(color)
     game.setPlayerAlive(player.member, true)
-    return message.channel.send(`**${player.member.user.tag}** (${player.color}) has been marked as alive.  ${Utils.getPlayerEmoji(player, emojis)}`)
+    return message.channel.send(`**${player.member.user.tag}** (${player.color}) has been marked as alive. ${Utils.getPlayerEmoji(player, emojis)}`)
   }
 }
