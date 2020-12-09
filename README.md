@@ -61,9 +61,10 @@ Although not recommended for production, cloning the repository should work just
    > `cd amongcord`
 3. Install the dependencies
    > `npm install`
-4. Set the **DISCORD_TOKEN** and **GUILD_ID** environment variables
+4. Set the **DISCORD_TOKEN** and **GUILD_ID** environment variables in a file called `.env`, which is located in the Root-Directory of the project.
 5. Run the bot
    > `node src/.`
+
 
 ## Similar projects
 
