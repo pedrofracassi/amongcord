@@ -2,8 +2,9 @@ const Game = require('./Game')
 const GameStages = require('./GameStages')
 
 class GameManager {
-  constructor (io) {
+  constructor (io, client) {
     this.io = io
+    this.client= client
     this.games = new Map()
   }
 

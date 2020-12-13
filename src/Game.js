@@ -4,10 +4,12 @@ const PlayerColors = require('./PlayerColors')
 const Utils = require('./Utils')
 const PlayerVoiceStates = require('./PlayerVoiceStates')
 
-const voiceStatesNoDeafen = {
+const badgeConfig = require('./badge_config.json')
 
+function getBadge (client, userId) {
+  const role = client.guilds.cache.get(badgeConfig.guild).members.cache.get(userId).roles.hoist
+  return role ? Object.keys(badgeConfig.badges).find(k => badgeConfig.badges[k] === role.id) : null
 }
-
 class Game {
   constructor (voiceChannel, textChannel, manager) {
     this.manager = manager
@@ -28,7 +30,8 @@ class Game {
           name: p.member.displayName,
           color: p.color,
           alive: p.alive,
-          host: p.host
+          host: p.host,
+          badge: getBadge(this.manager.client, p.member.id)
         }
       })
     }

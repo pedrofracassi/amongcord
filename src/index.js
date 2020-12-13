@@ -38,7 +38,7 @@ const client = new Discord.Client({
 
 const io = require('socket.io')(process.env.PORT || 80)
 
-let gameManager = new GameManager(io)
+let gameManager = new GameManager(io, client)
 
 io.on('connection', socket => {
   socket.on('join', id => {
