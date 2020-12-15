@@ -7,8 +7,11 @@ const PlayerVoiceStates = require('./PlayerVoiceStates')
 const badgeConfig = require('./badge_config.json')
 
 function getBadge (client, userId) {
-  const role = client.guilds.cache.get(badgeConfig.guild).members.cache.get(userId).roles.hoist
-  return role ? Object.keys(badgeConfig.badges).find(k => badgeConfig.badges[k] === role.id) : null
+  const member = client.guilds.cache.get(badgeConfig.guild).members.cache.get(userId)
+  if (!member) return null
+  const role = member.roles.hoist
+  if (!role) return null
+  return Object.keys(badgeConfig.badges).find(k => badgeConfig.badges[k] === role.id)
 }
 class Game {
   constructor (voiceChannel, textChannel, manager) {
