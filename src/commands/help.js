@@ -21,7 +21,7 @@ module.exports = class Commands extends Command {
             return `**\`${prefix}${c.name}${c.usage ? ` ${c.usage}` : ''}\`** - ${c.description} ${c.new ? emojis.get('new') || '' : ''}`
           }).join('\n'),
           '',
-          '[**Add Amongcord to your server**](https://amongcord.pedrofracassi.me/add)',
+          '[**Add Amongcord to your server**](https://add.amongcord.xyz)',
           [
             '[GitHub](https://github.com/pedrofracassi/amongcord)',
             '[Twitter](https://twitter.com/plfracassi_)',

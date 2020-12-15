@@ -1,7 +1,7 @@
 <div align="center">
   <img height="200" src="https://svgshare.com/i/PXE.svg">
   <p>Discord bot for controlling voice channels during Among Us matches</p>
-  <a href="https://amongcord.pedrofracassi.me/add"><b>Click here to add Amongcord to your server</b></a>
+  <a href="https://add.amongcord.xyz"><b>Click here to add Amongcord to your server</b></a>
 </div>
 
 ---
@@ -43,7 +43,7 @@
 
 ## Self-hosting
 
-If you prefer you run the bot yourself instead of using the [hosted instance](https://amongcord.pedrofracassi.me/add), you can either use **Docker** or **clone the repository directly**. For both methods, you'll need a  [bot token](https://github.com/reactiflux/discord-irc/wiki/Creating-a-discord-bot-&-getting-a-token) and the ID of a server that has the [emojis the bot needs](https://github.com/pedrofracassi/amongcord/tree/master/emojis) (the bot needs to be in the server).
+If you prefer you run the bot yourself instead of using the [hosted instance](https://add.amongcord.xyz), you can either use **Docker** or **clone the repository directly**. For both methods, you'll need a  [bot token](https://github.com/reactiflux/discord-irc/wiki/Creating-a-discord-bot-&-getting-a-token) and the ID of a server that has the [emojis the bot needs](https://github.com/pedrofracassi/amongcord/tree/master/emojis) (the bot needs to be in the server).
 
 ### Docker
 
