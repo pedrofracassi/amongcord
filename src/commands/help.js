@@ -18,7 +18,7 @@ module.exports = class Commands extends Command {
         .setColor(0x7289DA)
         .setDescription([
           commands.filter(c => !c.hidden).map(c => {
-            return `**\`${prefix}${c.name}${c.usage ? ` ${c.usage}` : ''}\`** - ${c.description} ${c.new ? emojis.get('new') || '' : ''}`
+            return `**\`${prefix}${c.name}${c.usage ? ` ${c.usage}` : ''}\`** | `**\`${prefix}${c.aliases}${c.usage ? ` ${c.usage}` : ''}\`** - ${c.description} ${c.new ? emojis.get('new') || '' : ''}`
           }).join('\n'),
           '',
           '[**Add Amongcord to your server**](https://amongcord.pedrofracassi.me/add)',
