@@ -18,6 +18,7 @@
 | `,forcejoin <color> <@mention>` | `,fj` | Forcibly adds someone to the current game |
 | `,github` | `,gh` | Links to the bot's GitHub page |
 | `,help` | `,h` | Lists all of the bot's commands |
+| `,host` |  | Sets you as the game host so only you can control the bot |
 | `,join <color>` | `,j` | Joins the current game as a color |
 | `,joinall` | `,ja` | Adds everyone in the voice channel to the game as a random color. |
 | `,kick <color>` | `,k` | Removes a player from the game |
@@ -25,17 +26,18 @@
 | `,lobby` | `,lb` | Sets the stage to Lobby, marks everyone as alive and unmutes them |
 | `,newgame` | `,ng` | Starts a new game |
 | `,players` | `,p` | Lists all players in the current game |
-| `,setcolor` | `,sc`, `,changecolor`, `,cc` | Set the color of a player in your game |
-| `,sync` |  | Lets you control the bot through your phone |
+| `,setcolor <color> <@mention>` | `,sc`,`,changecolor`,`,cc` | Set the color of a player in your game |
+| `,sync` | `,s` | Lets you control the bot through your phone |
 | `,tasks` | `,ts` | Sets the stage to tasks and mutes everyone |
+| `,unhost` |  | Exits "host mode" and frees you from being the host |
 
 ###### **\*** aliases have not been implemented yet.
 
 ## Support server
 
 <div>
-  <a href="https://discord.gg/ENcM67N">
-    <img src="https://invidget.switchblade.xyz/ENcM67N"></img>
+  <a href="https://discord.gg/E3F6U53NxT">
+    <img src="https://invidget.switchblade.xyz/E3F6U53NxT"></img>
   </a>
 </div>
 
