@@ -59,14 +59,19 @@ class Game {
     if (stage.toLowerCase() === GameStages.LOBBY) this.setAliveAll(true)
     
     this.sendStateUpdate()
-    
-    const sortedPlayers = [...this.players].sort((a, b) => {
-      if (stage === GameStages.DISCUSSION || stage === GameStages.LOBBY) return a.alive - b.alive
-      if (stage === GameStages.TASKS) return b.alive - a.alive
-    })
 
-    for (const player of sortedPlayers) {
-      await this.updatePlayerMute(player)
+    const alivePlayers = this.players.filter(p => p.alive)
+    const deadPlayers = this.players.filter(p => !p.alive)
+
+    // to avoid leaking voice to players not supposed to hear it ...
+    if (stage === GameStages.DISCUSSION || stage === GameStages.LOBBY) {
+      // when switching to discussion ...
+      await Promise.all(deadPlayers.map(p => this.updatePlayerMute(p))) // first mute ghosts
+      await Promise.all(alivePlayers.map(p => this.updatePlayerMute(p))) // then allow alive players to discuss
+    } else if (stage === GameStages.TASKS) {
+      // when switching to tasks ...
+      await Promise.all(alivePlayers.map(p => this.updatePlayerMute(p))) // first mute and deafen alive players
+      await Promise.all(deadPlayers.map(p => this.updatePlayerMute(p))) // then allow ghosts to talk
     }
   }
 
@@ -149,7 +154,7 @@ class Game {
   updatePlayerMute (player) {
     if (player.member.user.bot) return
     const states = new PlayerVoiceStates(player.member.guild.me, this.voiceChannel, player, this)
-    Utils.editMember(player.member, states.getVoiceState(this.gameStage))
+    return Utils.editMember(player.member, states.getVoiceState(this.gameStage))
   }
 }
 
