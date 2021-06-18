@@ -10,5 +10,11 @@ module.exports = {
   PURPLE: 'purple',
   BROWN: 'brown',
   CYAN: 'cyan',
-  LIME: 'lime'
+  LIME: 'lime',
+  BANANA: 'banana',
+  ROSE: 'rose',
+  CORAL: 'coral',
+  GRAY: 'gray',
+  MAROON: 'maroon',
+  TAN: 'tan'
 }
