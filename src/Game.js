@@ -4,15 +4,6 @@ const PlayerColors = require('./PlayerColors')
 const Utils = require('./Utils')
 const PlayerVoiceStates = require('./PlayerVoiceStates')
 
-const badgeConfig = require('./badge_config.json')
-
-function getBadge (client, userId) {
-  const member = client.guilds.cache.get(badgeConfig.guild).members.cache.get(userId)
-  if (!member) return null
-  const role = member.roles.hoist
-  if (!role) return null
-  return Object.keys(badgeConfig.badges).find(k => badgeConfig.badges[k] === role.id)
-}
 class Game {
   constructor (voiceChannel, textChannel, manager) {
     this.manager = manager
@@ -33,8 +24,7 @@ class Game {
           name: p.member.displayName,
           color: p.color,
           alive: p.alive,
-          host: p.host,
-          badge: getBadge(this.manager.client, p.member.id)
+          host: p.host
         }
       })
     }
@@ -55,11 +45,11 @@ class Game {
 
   async setStage (stage) {
     this.gameStage = stage
-    
+
     if (stage.toLowerCase() === GameStages.LOBBY) this.setAliveAll(true)
-    
+
     this.sendStateUpdate()
-    
+
     const sortedPlayers = [...this.players].sort((a, b) => {
       if (stage === GameStages.DISCUSSION || stage === GameStages.LOBBY) return a.alive - b.alive
       if (stage === GameStages.TASKS) return b.alive - a.alive
@@ -108,7 +98,7 @@ class Game {
   getPlayers() {
     return this.players
   }
-  
+
   setPlayerAlive (member, alive) {
     const player = this.getPlayer(member)
     player.setAlive(alive)

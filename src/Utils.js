@@ -28,9 +28,9 @@ module.exports = class Utils {
   static getPlayerEmoji (player, emojis) {
     if (emojis.size === 0) return ''
     if (player.alive) {
-      return emojis.get(player.color)
+      return emojis.get(`au_${player.color}`)
     } else {
-      return emojis.get(`${player.color}_dead`)
+      return emojis.get(`au_${player.color}_dead`)
     }
   }
 

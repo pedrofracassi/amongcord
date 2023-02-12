@@ -1,8 +1,7 @@
 {
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon --exec node -r dotenv/config src/index.js",
-    "start": "node src/."
+    "start": "node -r dotenv/config src/index.js"
   },
   "repository": {
     "type": "git",
